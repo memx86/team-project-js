@@ -1,3 +1,14 @@
+@mixin retina {
+  @media screen and (min-device-pixel-ratio: 2),
+    screen and (-moz-min-device-pixel-ratio: 2),
+    screen and (-o-min-device-pixel-ratio: 2/1),
+    screen and (-webkit-min-device-pixel-ratio: 2),
+    screen and (min-resolution: 192dpi),
+    screen and (min-resolution: 2dppx) {
+    @content;
+  }
+}
+
 @mixin mq($range) {
   $mobile: 320px;
   $tablet: 768px;
@@ -22,6 +33,10 @@
   }
 } @else if $range == desktop {
   @media (min-width: $desktop) {
+    @content;
+  }
+} @else if $range == not-desktop {
+  @media (max-width: #{$desktop - 1}) {
     @content;
   }
 }
