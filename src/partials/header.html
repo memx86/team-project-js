@@ -1,19 +1,25 @@
 <header class="header">
-  <a href="index.html" class="header__logo">
-    <svg>
-      <use href="images/sprite.svg#icon-film"></use>
-    </svg>
-    <span>Filmoteka</span>
-  </a>
-  <form action="">
-    <label for=""></label>
-    <input type="text" placeholder="Поиск фильмов" />
-  </form>
-
-  <nav class="header-nav">
-    <ul class="header-list">
-      <li class="header-list__item"><a href="" class="header-list__link">Home</a></li>
-      <li class="header-list__item"><a href="" class="header-list__link">My library</a></li>
-    </ul>
-  </nav>
+  <div class="container">
+    <div class="header-container">
+      <a href="index.html" class="header__logo">
+        <svg class="header__icon">
+          <use href="images/sprite.svg#icon-film"></use>
+        </svg>
+        <span class="header__name">Filmoteka</span>
+      </a>
+      <nav class="header-nav">
+        <ul class="header-list">
+          <li class="header-list__item"><a href="" class="header-list__link current">Home</a></li>
+          <li class="header-list__item"><a href="" class="header-list__link">My library</a></li>
+        </ul>
+      </nav>
+    </div>
+    <form action="" class="header-form">
+      <label for="" class="header-form__label"></label>
+      <input type="text" placeholder="Поиск фильмов" class="header-form__input" />
+      <svg class="header-form__icon">
+        <use href="images/sprite.svg#icon-search"></use>
+      </svg>
+    </form>
+  </div>
 </header>

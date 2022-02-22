@@ -1,0 +1,125 @@
+//////////////////HEADER/////////////////////////////////
+.header {
+  padding-top: 24px;
+  padding-bottom: 97px;
+  margin-left: auto;
+  margin-right: auto;
+  background-image: url('/images/header-overlay/header-overlay-sm.png');
+
+  @include mq(tablet) {
+    padding-top: 41px;
+    background-image: url('/images/header-overlay/header-overlay-md.png');
+  }
+
+  @include mq(desktop) {
+    padding-top: 41px;
+    background-image: url('/images/header-overlay/header-overlay-lg.png');
+    background-size: cover;
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  &__name {
+    @include mq(mobile-only) {
+      display: none;
+    }
+
+    @include mq(tablet) {
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 30px;
+      line-height: 1.16;
+      margin-left: 10px;
+      color: var(--main-light-cl);
+    }
+  }
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+///////////////////FORM/////////////////////////////////////
+.header-form {
+  position: relative;
+
+  margin-top: 41px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+
+  @include mq(tablet) {
+    width: 336px;
+  }
+
+  @include mq(desktop) {
+    width: 336px;
+  }
+
+  &__label {
+    display: block;
+  }
+
+  &__input {
+    width: 100%;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 1.14;
+    background-color: transparent;
+    color: var(--main-light-cl);
+    padding-bottom: 4px;
+    border: none;
+    border-bottom: 0.5px solid #ffffff;
+
+    &::placeholder {
+      color: var(--main-light-cl);
+    }
+  }
+
+  &__icon {
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    top: 5px;
+    right: 0;
+  }
+}
+
+///////////////////NAVIGATION//////////////////////////
+.header-list {
+  display: flex;
+
+  &__item + &__item {
+    margin-left: 39px;
+  }
+
+  &__link {
+    position: relative;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.16;
+    text-transform: uppercase;
+    color: var(--main-light-cl);
+    margin-top: 5px;
+  }
+
+  &__link.current::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    right: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--accent-cl);
+  }
+}
