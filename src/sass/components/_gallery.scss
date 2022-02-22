@@ -1,0 +1,47 @@
+.gallery {
+  list-style: none;
+}
+
+.card-item {
+  position: relative;
+}
+
+.movie-title {
+  text-transform: uppercase;
+  color: var(--main-text-cl);
+}
+
+.movie-info {
+  color: var(--accent-cl);
+}
+
+.movie-info:not(:last-child)::after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 100%;
+  background-color: var(--accent-cl);
+  position: absolute;
+  top: 0;
+  right: -10px;
+}
+.movie-rating {
+  padding: 1px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--accent-cl);
+  color: var(--main-light-cl);
+  width: 36px;
+  height: 16px;
+}
+
+.movie-img {
+  border: none;
+  border-radius: 5px;
+  @include mq(tablet) {
+    width: 294px;
+  }
+  @include mq(desktop) {
+    width: 274px;
+  }
+}
