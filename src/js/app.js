@@ -1,1 +1,4 @@
-export default function app() {}
+import pagination from './pagination';
+export default function app() {
+  pagination();
+}
