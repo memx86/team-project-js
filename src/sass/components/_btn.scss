@@ -9,11 +9,6 @@
   border-radius: 5px;
   padding-left: 8px;
   padding-right: 8px;
-  font-family: roboto;
-  font-weight: 500;
-  font-style: normal;
-  font-size: 12px;
-  line-height: 1.33;
   text-align: center;
 }
 .btn--modal {
@@ -33,12 +28,12 @@
 .btn--off {
   background-color: transparent;
   color: var(--main-text-cl);
-  border: 1px solid #000000;
+  border: 1px solid var(--main-text-cl);
 }
 
 .btn--header {
   color: var(--main-light-cl);
-  border: 1px solid #ffffff;
+  border: 1px solid var(--main-light-cl);
   width: 130px;
   @include mq(desktop) {
     width: 136px;
