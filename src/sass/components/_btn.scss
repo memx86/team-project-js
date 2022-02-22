@@ -1,0 +1,47 @@
+.buttons__container {
+  display: flex;
+}
+
+.btn--modal,
+.btn--header {
+  text-transform: uppercase;
+  height: 44px;
+  border-radius: 5px;
+  padding-left: 8px;
+  padding-right: 8px;
+  text-align: center;
+}
+.btn--modal {
+  width: 112px;
+  @include mq(tablet) {
+    width: 125px;
+  }
+  @include mq(desktop) {
+    width: 136px;
+  }
+}
+.btn--modal:first-child,
+.btn--header:first-child {
+  margin-right: 15px;
+}
+
+.btn--off {
+  background-color: transparent;
+  color: var(--main-text-cl);
+  border: 1px solid var(--main-text-cl);
+}
+
+.btn--header {
+  color: var(--main-light-cl);
+  border: 1px solid var(--main-light-cl);
+  width: 130px;
+  @include mq(desktop) {
+    width: 136px;
+  }
+}
+
+.btn--on {
+  background-color: var(--accent-cl);
+  color: var(--main-light-cl);
+  border: none;
+}
