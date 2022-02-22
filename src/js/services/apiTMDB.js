@@ -35,24 +35,24 @@ export default class ApiTMDB {
     return Promise.reject(res.statusText);
   };
 
-  getTrending = async () => {
+  getTrending = () => {
     const params = new URLSearchParams({
       page: this.#page,
     });
-    return await this.getData(ApiTMDB.#ENDPOINTS.TRENDING, params);
+    return this.getData(ApiTMDB.#ENDPOINTS.TRENDING, params);
   };
 
-  searchMovies = async () => {
+  searchMovies = () => {
     const params = new URLSearchParams({
       query: this.#query,
       page: this.#page,
     });
-    return await this.getData(ApiTMDB.#ENDPOINTS.SEARCH_MOVIES, params);
+    return this.getData(ApiTMDB.#ENDPOINTS.SEARCH_MOVIES, params);
   };
 
-  getMovie = async () => {
+  getMovie = () => {
     const endpoint = `${ApiTMDB.#ENDPOINTS.GET_MOVIE}/${this.#id}`;
-    return await this.getData(endpoint);
+    return this.getData(endpoint);
   };
 
   resetPage = () => {
