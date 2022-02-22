@@ -1,80 +1,156 @@
-import Modal from './modal';
 import ApiTMDB from './apiTMDB';
 
-const modalOneMuvie = new Modal("movie-one");
+// Создаем экземпляры классов
 const apiTMDB = new ApiTMDB();
 
-function makeOneMuvieMarkup(data) {
-    const markupMuvie = data.map(({ title, poster_path, genre_ids, vote_average, vote_count, original_title, overview, popularity}) => {
+// Функция для тестировки запроса по получению 20 фильмов
+async function fetchMovies() {
+    const data = await apiTMDB.getTrending();
+    console.log(data);
+    return data;
+}
+
+
+// Функция создающая разметку для одного фильма
+function makeOneMovieMarkup(data) {
+    const markupMovie = data.map(({ title, poster_path, genre_ids, vote_average, vote_count, original_title, overview, popularity}) => {
         returne `<div class="modal">
-        <button data-modal-close="movie-one">
-        <svg id="" width="14" height="14"></svg>
-        </button>
-        <div class="modal__content">
-    <div class="poster__wrapper">
-        <img class="poster__img" alt="${title}" src="https://image.tmdb.org/t/p/w500${poster_path}" loading="lazy" />
-    </div>
-    <div class="description__wrapper">
-        <h2 class="movie__title">${title}</h2>
-        <div class="movie__statistic">
-        <ul class="movie__list">
-            <li class="movie__item">
-                <p class="movie__item--left">Vote &#47 Votes</p>
-                <p class="movie__item--right">
-                <span class="average">${vote_average}</span>
-                <span>&#47</span>
-                <span class="count">${vote_count}</span></p>
-            </li>
-            <li class="movie__item">
-                <p class="movie__item--left">Popularity</p>
-                <p class="movie__item--right">${popularity}</p>
-            /li>
-            </li>
-
-            <li class="movie__item">
-            <p class="movie__item--left">Original Title</p>
-            <p class="movie__item--right">${original_title}</p>
-            /li>
-            </li>
-
-            <li class="movie__item">
-            <p class="movie__item--left">Genre</p>
-            <p class="movie__item--right">${genre_ids}</p>
-            </li>
-        </ul>
+    <button type="button" data-modal-close="movie-one">
+        <svg class="modal__icon--close" id="" width="14" height="14">
+            <use href="../images/sprite.svg#icon-close"></use>
+        </svg>
+    </button>
+    <div class="modal__content">
+        <div class="poster__wrapper">
+            <img class="poster__img" alt="${title}" src="https://image.tmdb.org/t/p/w500${poster_path}" loading="lazy" />
         </div>
-        <div class="movie__content">
-        <h3 class="content__title">About</h3>
-        <p class="content__text">${overview}</p>
+        <div class="movie">
+            <h2 class="movie__title uppercase">${title}</h2>
+            <div class="movie__statistic">
+                <ul class="movie__list--left">
+                    <li class="movie__item--left">Vote &#47 Votes
+                    </li>
+                    <li class="movie__item--left">Popularity
+                    </li>
+                    <li class="movie__item--left">Original Title
+                    </li>
+                    <li class="movie__item--left">Genre
+                    </li>
+                </ul>
+                <ul class="movie__list--right">
+                    <li class="movie__item--right">
+                        <span class="movie__average">${vote_average}</span>
+                        <span>&#47</span>
+                        <span class="movie__count">${vote_count}</span></p>
+                    </li>
+                    <li class="movie__item--right">${popularity}
+                    </li>
+                    <li class="movie__item--right uppercase">${original_title}
+                    </li>
+                    <li class="movie__item--right">${genre_ids}
+                    </li>
+                </ul>
+            </div>
+            <div class="movie__description">
+                <h3 class="movie__about uppercase">About</h3>
+                <p class="movie__text">${overview}</p>
+            </div>
+            <ul class="movie__btn">
+                <li>
+                    <button type="button" class="" id="watched">add to Watched</button>
+                </li>
+                <li>
+                    <button type="button" class="" id="queue">add to queue</button>
+                </li>
+                <li>
+                    <button type="button" class="" id="trailer">trailer</button>
+                </li>
+            </ul>
         </div>
-        <ul class="movie__btn">
-        <li>
-            <button type="button" class="" id="watched">add to Watched</button>
-        </li>
-        <li>
-            <button type="button" class="" id="queue">add to queue</button>
-        </li>
-        <li>
-            <button type="button" class="" id="trailer">trailer</button>
-        </li>
-        </ul>
     </div>
-</div>
 </div>`
     }).join('')
 }
 
-
-function renderMuvieModal() {
-    modalOneMuvie.refs.modal.insertAdjacentHTML('beforeend', makeOneMuvieMarkup(data))
+// Функция, которая рендерит разметку в модальном окне
+function renderMovieModal() {
+    modalOneMovie.refs.modal.insertAdjacentHTML('beforeend', makeOneMovieMarkup(data));
     
 }
 
-renderMuvieModal()
-console.log(1111);
+// Функция для очищения разметки в модальном окне
+function clearModal() {
+    modalOneMovie.refs.modal.innerHTML = '';
+}
+
+// Функция для получения id фильма выбранного пользователем в галерее фильмов и открытия модального окна
+function openMovieInModal(event) {
+    event.preventDefault();
+    apiTMDB.getTrending().then(data => {
+        const { results } = data; 
+        
+    })
+    
+    // if (event.target=== event.currentTarget){
+    //     return
+    // };
+    // modalOneMovie.onModalOpenBtnClick();
+    apiTMDB.id = results[0].id;
+    apiTMDB.getMovie().then(data => renderMovieModal(data)).catch(handleError);
+}
+
+window.addEventListener('click', openMovieInModal)
+
+// Функция для сообщения пользователю об ошибке
+const handleError=()=>{
+    console.log(1111);
+}
 
 
-export { makeOneMuvieMarkup };
+
+
+
+export { makeOneMovieMarkup };
+
+
+// Функция для модального окна
+//     export default class Modal {
+//   constructor(name) {
+//     this.refs = {
+//       modal: document.querySelector(`[data-modal="${name}"]`),
+//         closeBtn: document.querySelector(`[data-modal-close="${name}"]`),
+       
+//       };
+//       const  items= document.querySelectorAll(`li`),
+      
+//     this.refs.openLi.addEventListener('click', this.onModalOpenLiClick);
+//   }
+//   onModalOpenLiClick = () => {
+//     this.openModal();
+//     this.refs.closeBtn.addEventListener('click', this.closeModal);
+//     this.refs.modal.addEventListener('click', this.onBackdropClick);
+//     document.addEventListener('keydown', this.onEscDown);
+//   };
+//   openModal = () => {
+//     this.refs.modal.classList.remove('is-hidden');
+//     document.body.classList.add('modal-open');
+//   };
+//   closeModal = () => {
+//     this.refs.modal.classList.add('is-hidden');
+//     document.body.classList.remove('modal-open');
+//     this.refs.closeBtn.removeEventListener('click', this.closeModal);
+//     this.refs.modal.removeEventListener('click', this.onBackdropClick);
+//     document.removeEventListener('keydown', this.onEscDown);
+//   };
+//   onBackdropClick = e => {
+//     if (e.target !== this.refs.modal) return;
+//     this.closeModal();
+//   };
+//   onEscDown = e => {
+//     if (e.code !== 'Escape') return;
+//     this.closeModal();
+//   };
+// }
 
 
 // "id": 632727,
