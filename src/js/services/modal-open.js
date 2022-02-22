@@ -3,19 +3,29 @@ import ApiTMDB from './apiTMDB';
 // Создаем экземпляры классов
 const apiTMDB = new ApiTMDB();
 
+const modalDiv = document.querySelector('[data-modal="movie-one"]')
+
 // Функция для тестировки запроса по получению 20 фильмов
-async function fetchMovies() {
-    const data = await apiTMDB.getTrending();
-    console.log(data);
-    return data;
+async function fetchMovies(event) {
+    try {
+        event.preventDefault();
+        const data = await apiTMDB.getTrending();
+        apiTMDB.id = data.results[0].id;
+        const dataMovie = await apiTMDB.getMovie();
+            modalDiv.insertAdjacentHTML('beforeend', makeOneMovieMarkup(dataMovie))
+
+    } catch (error) {
+        console.log(error);
+        handleError()
+    }    
 }
 
 
 // Функция создающая разметку для одного фильма
-function makeOneMovieMarkup(data) {
-    const markupMovie = data.map(({ title, poster_path, genre_ids, vote_average, vote_count, original_title, overview, popularity}) => {
-        returne `<div class="modal">
-    <button type="button" data-modal-close="movie-one">
+function makeOneMovieMarkup(dataMovie) {
+    const { title, poster_path, genre_ids, vote_average, vote_count, original_title, overview, popularity } = dataMovie;
+        return `<div class="modal">
+    <button class="modal-close" type="button" data-modal-close="movie-one">
         <svg class="modal__icon--close" id="" width="14" height="14">
             <use href="../images/sprite.svg#icon-close"></use>
         </svg>
@@ -69,13 +79,14 @@ function makeOneMovieMarkup(data) {
         </div>
     </div>
 </div>`
-    }).join('')
 }
 
 // Функция, которая рендерит разметку в модальном окне
 function renderMovieModal() {
-    modalOneMovie.refs.modal.insertAdjacentHTML('beforeend', makeOneMovieMarkup(data));
-    
+
+
+    modalDiv.insertAdjacentHTML('beforeend', makeOneMovieMarkup(dataMovie).join())
+   
 }
 
 // Функция для очищения разметки в модальном окне
@@ -86,20 +97,15 @@ function clearModal() {
 // Функция для получения id фильма выбранного пользователем в галерее фильмов и открытия модального окна
 function openMovieInModal(event) {
     event.preventDefault();
-    apiTMDB.getTrending().then(data => {
-        const { results } = data; 
-        
+    // fetchMovies() 
+    apiTMDB.getTrending()
+        .then(data => {
+            apiTMDB.id = data.results[0].id;
+            apiTMDB.getMovie().then(data => renderMovieModal(data)).catch(handleError);
     })
-    
-    // if (event.target=== event.currentTarget){
-    //     return
-    // };
-    // modalOneMovie.onModalOpenBtnClick();
-    apiTMDB.id = results[0].id;
-    apiTMDB.getMovie().then(data => renderMovieModal(data)).catch(handleError);
 }
 
-window.addEventListener('click', openMovieInModal)
+window.addEventListener('click', fetchMovies)
 
 // Функция для сообщения пользователю об ошибке
 const handleError=()=>{
