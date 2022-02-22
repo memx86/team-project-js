@@ -1,3 +1,14 @@
+/**
+ * по умолчанию страница 1
+ * есть геттер и сеттер для page
+ * метод .incrementPage увеличивает страницу на 1
+ * метод .resetPage устанавливет страницу в 1
+ * запрос трендов - метод .getTrending()
+ * поиск фильмов по query(строка) - метод .searchMovies()
+ *  перед использовнием метода установить query на своем экземпляре класса
+ * поиск фильма по id(число) - метод .getMovie()
+ *  перед использовнием метода установить id на своем экземпляре класса
+ */
 export default class ApiTMDB {
   static #API_KEY = 'fadfbb72581e18342bb7490adda20bdd';
   static #BASE_URL = 'https://api.themoviedb.org/3';
@@ -44,6 +55,9 @@ export default class ApiTMDB {
     return await this.getData(endpoint);
   };
 
+  resetPage = () => {
+    this.#page = 1;
+  };
   incrementPage = () => {
     this.#page += 1;
   };
