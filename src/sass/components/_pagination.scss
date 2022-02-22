@@ -15,11 +15,12 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: color 250ms linear, background-color 250ms linear;
+  transition: color 250ms linear, background-color 250ms linear, opacity 250ms linear,
+    visibility 250ms linear;
   &--bg {
     background-color: var(--secondary-bg-cl);
   }
-  &:hover,
+  &:not(:disabled):hover,
   &:focus {
     outline: none;
     color: var(--main-light-cl);
@@ -35,9 +36,22 @@
       border: 1px solid var(--accent-cl);
     }
   }
+  &.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
 }
 .pagination__pages {
   display: flex;
   gap: 4px;
   align-items: center;
+}
+.dots {
+  transition: opacity 250ms linear, visibility 250ms linear;
+  &.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
 }

@@ -1,4 +1,1 @@
-import pagination from './pagination';
-export default function app() {
-  pagination();
-}
+export default function app() {}
