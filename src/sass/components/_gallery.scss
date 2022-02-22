@@ -1,0 +1,39 @@
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.gallery {
+  list-style: none;
+}
+
+.card-item {
+  position: relative;
+}
+
+.movie-title {
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  color: #000000;
+}
+
+.movie-info {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #ff6b08;
+}
+
+.movie-info:not(:last-child)::after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 100%;
+  background-color: #ff6b08;
+  position: absolute;
+  //top:0;
+  //right: -10px;
+}
