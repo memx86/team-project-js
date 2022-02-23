@@ -63,6 +63,11 @@ export default class ApiTMDB {
     return this.getData(endpoint).then(res => res.genres);
   };
 
+  getGenres = () => {
+    const endpoint = `${ApiTMDB.#ENDPOINTS.GENRES}`;
+    return this.getData(endpoint).then(res => res.genres);
+  };
+
   resetPage = () => {
     this.#page = 1;
   };

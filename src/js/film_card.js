@@ -20,30 +20,29 @@ const makeMoviesMarkup = movies =>
       const poster = poster_path ? `https://image.tmdb.org/t/p/w300${poster_path}` : notFoundImg;
       return `
       <li class="card-item" data-id="${id}">
-<div class = "movie-card">
-<picture>
-	<source
-	srcset="
-	${poster} 1x,
-  ${poster2x} 2x,
-  " 
- />
-<img class="movie-img"
-src="${poster}"
-alt="${title}"
-width="280"
-height="398"
-/>
-</picture>
-<h5 class="movie-title">${title}</h5>
-<div class="container_movie-info">
-<p class="movie-info">${genresNames.join(', ')} |  </p>
-<p class="movie-info"> ${year} </p>
-<p class="movie-rating">${vote_average ? vote_average : 'N/A'}</p>
-</div>
-</div>
-</li>
-`;
+        <picture>
+          <source
+          srcset="
+          ${poster} 1x,
+          ${poster2x} 2x,
+          " 
+        />
+        <img class="movie-img"
+        src="${poster}"
+        alt="${title}"
+        width="280"
+        height="398"
+        />
+        </picture>
+        <div class = "movie-card">
+        <h5 class="movie-title">${title}</h5>
+        <div class="container_movie-info">
+        <p class="movie-info">${genresNames.join(', ')} | ${year}</p>
+        <p class="movie-rating">${vote_average ? vote_average : 'N/A'}</p>
+        </div>
+        </div>
+        </li>
+        `;
     })
     .join('');
 
