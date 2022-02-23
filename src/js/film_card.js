@@ -5,11 +5,12 @@ const makeMoviesMarkup = movies =>
   movies
     .map(({ title, release_date, poster_path, genre_ids, vote_count }) => {
       const year = new Date(release_date).getFullYear();
+      const poster = poster_path ? `https://image.tmdb.org/t/p/w500${poster_path}` : notFoundImg;
       return `
       <li class="card-item">
 <div class = "movie-card">
 <img class="movie-img"
-src="https://image.tmdb.org/t/p/w500${poster_path}"
+src="${poster}"
 alt="${title}"
 width="280"
 height="398"
