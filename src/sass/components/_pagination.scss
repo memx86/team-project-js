@@ -1,4 +1,11 @@
 .pagination {
+  margin-top: 40px;
+  @include mq(tablet-only) {
+    margin-top: 50px;
+  }
+  @include mq(desktop) {
+    margin-top: 46px;
+  }
   display: flex;
   justify-content: center;
   align-items: center;
