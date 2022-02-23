@@ -4,14 +4,14 @@
   padding-bottom: 97px;
   margin-left: auto;
   margin-right: auto;
+  background-size: cover;
+
   background-image: url('/images/header-overlay/header-overlay-sm.png');
   background-image: -webkit-image-set(url('/images/header-overlay/header-overlay-sm.webp') 1x);
 
   @include retina() {
     background-image: url('/images/header-overlay/header-overlay@2x-sm.png');
-    background-image: -webkit-image-set(
-      url('/src/images/header-overlay/header-overlay@2x-sm.webp') 2x
-    );
+    background-image: -webkit-image-set(url('/images/header-overlay/header-overlay@2x-sm.webp') 2x);
   }
 
   @include mq(tablet) {
@@ -32,7 +32,6 @@
     background-image: url('/images/header-overlay/header-overlay-lg.png');
     background-image: -webkit-image-set(url('/images/header-overlay/header-overlay-lg.webp') 1x);
 
-    background-size: cover;
     @include retina() {
       background-image: url('/images/header-overlay/header-overlay@2x-lg.png');
       background-image: -webkit-image-set(
@@ -108,12 +107,18 @@
     }
   }
 
-  &__icon {
-    width: 12px;
-    height: 12px;
+  &__button {
     position: absolute;
     top: 5px;
     right: 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  &__icon {
+    width: 12px;
+    height: 12px;
   }
 }
 
