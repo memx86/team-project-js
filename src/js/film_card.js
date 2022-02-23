@@ -8,7 +8,7 @@ const arr = genres.get();
 
 const makeMoviesMarkup = movies =>
   movies
-    .map(({ title, release_date, poster_path, genre_ids, vote_average }) => {
+    .map(({ title, release_date, poster_path, id, genre_ids, vote_average }) => {
       const genresNames = genre_ids.map(id => {
         const { name } = arr.find(item => item.id === id);
         return name;
@@ -19,7 +19,7 @@ const makeMoviesMarkup = movies =>
         : notFoundImgRetina;
       const poster = poster_path ? `https://image.tmdb.org/t/p/w300${poster_path}` : notFoundImg;
       return `
-      <li class="card-item">
+      <li class="card-item" data-id="${id}">
 <div class = "movie-card">
 <picture>
 	<source
