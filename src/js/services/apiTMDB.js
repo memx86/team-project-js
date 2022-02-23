@@ -21,7 +21,6 @@ export default class ApiTMDB {
   static #COMMON_PARAMS = new URLSearchParams({
     api_key: ApiTMDB.#API_KEY,
     include_adult: false,
-    language: 'en-US',
   });
   #page = 1;
   #query;
@@ -52,8 +51,11 @@ export default class ApiTMDB {
   };
 
   getMovie = () => {
+    const params = new URLSearchParams({
+      append_to_response: 'videos,images',
+    });
     const endpoint = `${ApiTMDB.#ENDPOINTS.GET_MOVIE}/${this.#id}`;
-    return this.getData(endpoint);
+    return this.getData(endpoint, params);
   };
 
   getGenres = () => {
