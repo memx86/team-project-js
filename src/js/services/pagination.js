@@ -157,5 +157,7 @@ export default class Pagination {
   }
   set totalPages(newTotalPages) {
     this.#totalPages = newTotalPages;
+    [...this.getButtonsRef()].at(-1).textContent = this.#totalPages;
+    this.goToPage(this.#page);
   }
 }
