@@ -51,7 +51,6 @@
     }
 
     @include mq(tablet) {
-      font-family: Roboto;
       font-size: 30px;
       line-height: 1.16;
       margin-left: 10px;
@@ -79,19 +78,12 @@
     width: 336px;
   }
 
-  @include mq(desktop) {
-    width: 336px;
-  }
-
   &__label {
     display: block;
   }
 
   &__input {
     width: 100%;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
     font-size: 14px;
     line-height: 1.14;
     background-color: transparent;
@@ -130,8 +122,6 @@
 
   &__link {
     position: relative;
-    font-weight: 500;
-    font-size: 12px;
     line-height: 1.16;
     text-transform: uppercase;
     color: var(--main-light-cl);
