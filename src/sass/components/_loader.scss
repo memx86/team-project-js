@@ -6,9 +6,13 @@
   --margin: 8px;
   --speed: 1.5s;
   --speedDif: 0.05s;
-
+  margin: 20px auto;
   width: var(--parentWidth);
   height: var(--size);
+
+  &.is-hidden {
+    display: none;
+  }
 }
 
 .loader div {
