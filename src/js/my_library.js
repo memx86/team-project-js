@@ -1,4 +1,5 @@
 import { renderMarkup } from './film_card';
+import Storage from './services/storage';
 
 const test = [
   {
@@ -342,9 +343,10 @@ const test = [
     vote_count: 15516,
   },
 ];
-
-const LOCALSTORAGE_WATCHED = test;
-const LOCALSTORAGE_QUEUE = test;
+const storageWatched = new Storage(Storage.KEYS.WATCHED);
+const storageQueue = new Storage(Storage.KEYS.QUEUED);
+const watched = storageWatched.get();
+const queue = storageQueue.get();
 
 const refs = {
   myLibBtn: document.querySelector('[data-btn="myLibrary"]'),
@@ -355,7 +357,6 @@ const refs = {
   queueBtn: document.querySelector('[data-btn="queue"]'),
   libBtnsContainer: document.querySelector('.buttons__container'),
   inputForm: document.querySelector('.header-form'),
-  headerBgc: document.querySelector('selector'),
   gallery: document.querySelector('.gallery'),
   header: document.querySelector('.header'),
 };
@@ -370,10 +371,11 @@ function onClickMyLibBtn() {
   refs.inputForm.classList.add('is-hidden');
   refs.gallery.innerHTML = '';
   refs.header.classList.add('myLib');
-  if (!LOCALSTORAGE_WATCHED) {
-    refs.gallery.innerHTML = 'img';
+  if (!watched) {
+    refs.gallery.innerHTML = 'img заглушка';
     return;
   }
+  renderMarkup(watched);
 }
 
 function onClickMyHomeBtn() {
@@ -385,29 +387,26 @@ function onClickMyHomeBtn() {
   refs.inputForm.classList.remove('is-hidden');
   refs.header.classList.remove('myLib');
   refs.gallery.innerHTML = '';
-  renderMarkup(LOCALSTORAGE_QUEUE);
-  if (!LOCALSTORAGE_QUEUE) {
-    refs.gallery.innerHTML = 'img';
-    return;
-  }
 }
 
 function onClickMyWatchedBtn() {
-  console.log('qweqwe');
   refs.gallery.innerHTML = '';
   changeClassBtn('btn--on', 'btn--off');
-  renderMarkup(LOCALSTORAGE_WATCHED);
-  if (!LOCALSTORAGE_WATCHED) {
-    refs.gallery.innerHTML = 'img';
+  if (!watched) {
+    refs.gallery.innerHTML = 'img заглушка';
     return;
   }
+  renderMarkup(watched);
 }
 
 function onClickMyQueueBtn() {
-  console.log('asdasde');
   refs.gallery.innerHTML = '';
   changeClassBtn('btn--off', 'btn--on');
-  renderMarkup(LOCALSTORAGE_QUEUE);
+  if (!queue) {
+    refs.gallery.innerHTML = 'img заглушка';
+    return;
+  }
+  renderMarkup(queue);
 }
 
 function changeClassBtn(add, remove) {

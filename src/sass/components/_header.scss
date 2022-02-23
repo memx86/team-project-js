@@ -130,6 +130,7 @@
     text-transform: uppercase;
     color: var(--main-light-cl);
     margin-top: 5px;
+    cursor: pointer;
   }
 
   &__link.current::after {
