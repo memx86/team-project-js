@@ -25,6 +25,10 @@
     visibility 250ms linear;
   &--bg {
     background-color: var(--secondary-bg-cl);
+    svg {
+      stroke: currentColor;
+      fill: transparent;
+    }
   }
   &:not(:disabled):hover,
   &:focus {
@@ -48,17 +52,28 @@
     pointer-events: none;
   }
 }
-.pagination__pages {
+.pagination__pages,
+.pagination__container {
   display: flex;
   gap: 4px;
   align-items: center;
 }
+
 .dots {
+  width: 40px;
+  height: 40px;
+  position: relative;
   transition: opacity 250ms linear, visibility 250ms linear;
   &.is-hidden {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+  }
+  &::after {
+    content: '...';
+    position: absolute;
+    top: 10px;
+    left: 15px;
   }
 }
 .hide {
