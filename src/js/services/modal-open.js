@@ -6,6 +6,17 @@ import Storage from './storage';
 const apiTMDB = new ApiTMDB();
 const storage = new Storage(Storage.KEYS.GENRES);
 const arr = storage.get();
+const watched = new Storage(Storage.KEYS.WATCHED);
+const queque = new Storage(Storage.KEYS.QUEUED);
+
+// Вводим переменную для ссылок на кнопки из динамической разметки
+let refs = {
+  btnWatchedRef: null,
+  btnQueueRef: null,
+  btnTrailerRef: null,
+};
+
+let dataMovie = {};
 
 // получаем ссылку на бэкдроп
 const backdropRef = document.querySelector(`[data-modal="movie-one"]`);
@@ -41,6 +52,7 @@ function makeOneMovieMarkup(dataMovie) {
     overview,
     popularity,
   } = dataMovie;
+  // для получения жанров фильма
   const arrNames = [];
   const genresNames = genres.map(genre => {
     arrNames.push(genre.name);
@@ -108,22 +120,28 @@ async function onModalOpenClick(event) {
   }
   apiTMDB.id = cardRef.dataset.id;
 
-  const dataMovie = await apiTMDB.getMovie();
-
+  dataMovie = await apiTMDB.getMovie();
   wrapperModalRef.insertAdjacentHTML('beforeend', makeOneMovieMarkup(dataMovie));
 
-  openModal();
+  onTakeRefs();
 
-  const btnWatchedRef = document.querySelector('#watched');
-  const btnQueueRef = document.querySelector('#queue');
-  const btnTrailerRef = document.querySelector('#trailer');
-  btnWatchedRef.textContent = 'Remuve to watched';
-  btnWatchedRef.classList.remove('btn--on');
-  btnWatchedRef.classList.add('btn--off');
+  if (checkInStorageWatched(apiTMDB.id)) {
+    refs.btnWatchedRef.classList.remove('btn--on');
+    refs.btnWatchedRef.classList.add('btn--off');
+    refs.btnWatchedRef.textContent = 'Remuve to watched';
+  }
+  if (checkInStorageQueque(apiTMDB.id)) {
+    refs.btnQueueRef.textContent = 'Remuve to queque';
+    refs.btnQueueRef.classList.remove('btn--on');
+    refs.btnQueueRef.classList.add('btn--off');
+  }
+
+  openModal();
 
   closeBtnRef.addEventListener('click', closeModal);
   backdropRef.addEventListener('click', onBackdropClick);
   document.addEventListener('keydown', onEscDown);
+  return dataMovie;
 }
 
 function openModal() {
@@ -152,10 +170,57 @@ function onBtnClick(e) {
   closeModal();
 }
 
+function onTakeRefs() {
+  refs = {
+    btnWatchedRef: document.querySelector('#watched'),
+    btnQueueRef: document.querySelector('#queue'),
+    btnTrailerRef: document.querySelector('#trailer'),
+  };
+
+  return refs;
+}
+
+function checkInStorageWatched(id) {
+  return watched.checkMovie(id);
+}
+
+function checkInStorageQueque(id) {
+  return queque.checkMovie(id);
+}
+
+function onSaveMuvieWatched(movie) {
+  watched.saveMovie(movie);
+  refs.btnWatchedRef.textContent = 'Remuve to watched';
+  refs.btnWatchedRef.classList.remove('btn--on');
+  refs.btnWatchedRef.classList.add('btn--off');
+}
+
+function onSaveMuvieQueque(movie) {
+  watched.saveMovie(movie);
+  refs.btnQueueRef.textContent = 'Remuve to queque';
+  refs.btnQueueRef.classList.remove('btn--on');
+  refs.btnQueueRef.classList.add('btn--off');
+}
+
+function onDeleteMuvieWatched(movie) {
+  watched.deleteMovie(movie);
+  refs.btnWatchedRef.textContent = 'Add to Watched';
+  refs.btnWatchedRef.classList.remove('btn--off');
+  refs.btnWatchedRef.classList.add('btn--on');
+}
+
+function onDeleteMuvieQueque(movie) {
+  watched.deleteMovie(movie);
+  refs.btnQueueRef.textContent = 'Add to queque';
+  refs.btnQueueRef.classList.remove('btn--off');
+  refs.btnQueueRef.classList.add('btn--on');
+}
+
 function onModalCard() {
   //  временный вызов функции для получения 20 карточек и их рендера
   fetchMovies();
   // вешаем слушателя на общего родителя галерею
   movieListRef.addEventListener('click', onModalOpenClick);
 }
+
 export { onModalCard };
