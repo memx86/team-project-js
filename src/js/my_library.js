@@ -346,6 +346,8 @@ const test = [
 const LOCALSTORAGE_WATCHED = test;
 const LOCALSTORAGE_QUEUE = test;
 
+renderMarkup(test);
+
 const refs = {
   myLibBtn: document.querySelector('selector'),
   homeBtn: document.querySelector('selector'),
@@ -376,14 +378,24 @@ refs.homeBtn.addEventListener('click', () => {
 });
 
 refs.watchedBtn.addEventListener('click', () => {
+  console.log(qweqwe);
+  changeClassBtn('btn--on', 'btn--off');
   renderMarkup(LOCALSTORAGE_WATCHED);
 });
 
 refs.queueBtn.addEventListener('click', () => {
+  changeClassBtn('btn--off', 'btn--on');
   renderMarkup(LOCALSTORAGE_QUEUE);
 });
 
 function changeBackgroundHeader(add, remove) {
   refs.headerBgc.classList.add(add);
   refs.headerBgc.classList.remove(remove);
+}
+
+function changeClassBtn(add, remove) {
+  refs.watchedBtn.classList.add(add);
+  refs.watchedBtn.classList.remove(remove);
+  refs.queueBtn.classList.add(remove);
+  refs.queueBtn.classList.remove(add);
 }
