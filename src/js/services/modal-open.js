@@ -4,7 +4,8 @@ import Storage from './storage';
 
 // Создаем экземпляры классов
 const apiTMDB = new ApiTMDB();
-const storage = new Storage('MOVIES');
+const storage = new Storage(Storage.KEYS.GENRES);
+const arr = storage.get();
 
 // получаем ссылку на бэкдроп
 const backdropRef = document.querySelector(`[data-modal="movie-one"]`);
@@ -17,29 +18,34 @@ const closeBtnRef = document.querySelector(`[data-modal-close="movie-one"]`);
 const wrapperModalRef = document.querySelector('.wrapper-modal');
 
 // Функция для тестировки запроса по получению 20 фильмов
-// async function fetchMovies(event) {
-//   try {
-//     const data = await apiTMDB.getTrending();
-//     const { results } = data;
-//     renderMarkup(results);
-//   } catch (error) {
-//     console.log(error);
-//     handleError();
-//   }
-// }
+async function fetchMovies(event) {
+  try {
+    const data = await apiTMDB.getTrending();
+    const { results } = data;
+    renderMarkup(results);
+  } catch (error) {
+    console.log(error);
+    handleError();
+  }
+}
 
 // Функция создающая разметку для одного фильма
 function makeOneMovieMarkup(dataMovie) {
   const {
     title,
     poster_path,
-    genre_ids,
+    genres,
     vote_average,
     vote_count,
     original_title,
     overview,
     popularity,
   } = dataMovie;
+  const arrNames = [];
+  const genresNames = genres.map(genre => {
+    arrNames.push(genre.name);
+    return arrNames;
+  });
   return `<div class="modal__content">
         <div class="poster__wrapper">
             <img class="poster__img" alt="${title}" src="https://image.tmdb.org/t/p/w500${poster_path}" loading="lazy" />
@@ -67,7 +73,7 @@ function makeOneMovieMarkup(dataMovie) {
                     </li>
                     <li class="movie__item--right uppercase">${original_title}
                     </li>
-                    <li class="movie__item--right">${genre_ids}
+                    <li class="movie__item--right">${arrNames.join(', ')}
                     </li>
                 </ul>
             </div>
@@ -76,9 +82,9 @@ function makeOneMovieMarkup(dataMovie) {
                 <p class="movie__text">${overview}</p>
             </div>
             <div class="movie__btn buttons__container">
-                    <button type="button" class="btn--modal btn--on" id="watched">add to Watched</button>
-                    <button type="button" class="btn--modal btn--on" id="queue">add to queue</button>
-                    <button type="button" class="btn--modal btn--on" id="trailer">trailer</button>
+                    <button type="button" class="btn--modal  btn--on" id="watched">add to Watched</button>
+                    <button type="button" class="btn--modal  btn--on" id="queue">add to queue</button>
+                    <button type="button" class="btn--modal  btn--on" id="trailer">trailer</button>
             </div>
         </div>
     </div>`;
@@ -107,6 +113,13 @@ async function onModalOpenClick(event) {
   wrapperModalRef.insertAdjacentHTML('beforeend', makeOneMovieMarkup(dataMovie));
 
   openModal();
+
+  const btnWatchedRef = document.querySelector('#watched');
+  const btnQueueRef = document.querySelector('#queue');
+  const btnTrailerRef = document.querySelector('#trailer');
+  btnWatchedRef.textContent = 'Remuve to watched';
+  btnWatchedRef.classList.remove('btn--on');
+  btnWatchedRef.classList.add('btn--off');
 
   closeBtnRef.addEventListener('click', closeModal);
   backdropRef.addEventListener('click', onBackdropClick);
@@ -141,7 +154,7 @@ function onBtnClick(e) {
 
 function onModalCard() {
   //  временный вызов функции для получения 20 карточек и их рендера
-  //   fetchMovies();
+  fetchMovies();
   // вешаем слушателя на общего родителя галерею
   movieListRef.addEventListener('click', onModalOpenClick);
 }

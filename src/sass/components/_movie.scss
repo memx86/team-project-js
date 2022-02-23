@@ -65,7 +65,7 @@
 
 .movie {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   padding-top: 30px;
   color: var(--main-text-cl);
   width: 100%;
