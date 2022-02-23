@@ -16,6 +16,7 @@ export default class ApiTMDB {
     TRENDING: '/trending/movie/day',
     SEARCH_MOVIES: '/search/movie',
     GET_MOVIE: '/movie',
+    GENRES: '/genre/movie/list',
   };
   static #COMMON_PARAMS = new URLSearchParams({
     api_key: ApiTMDB.#API_KEY,
@@ -53,6 +54,11 @@ export default class ApiTMDB {
   getMovie = () => {
     const endpoint = `${ApiTMDB.#ENDPOINTS.GET_MOVIE}/${this.#id}`;
     return this.getData(endpoint);
+  };
+
+  getGenres = () => {
+    const endpoint = `${ApiTMDB.#ENDPOINTS.GENRES}`;
+    return this.getData(endpoint).then(res => res.genres);
   };
 
   resetPage = () => {
