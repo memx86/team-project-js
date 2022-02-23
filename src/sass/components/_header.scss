@@ -28,7 +28,6 @@
   }
 
   @include mq(desktop) {
-    padding-top: 41px;
     background-image: url('/images/header-overlay/header-overlay-lg.png');
     background-image: -webkit-image-set(url('/images/header-overlay/header-overlay-lg.webp') 1x);
 
