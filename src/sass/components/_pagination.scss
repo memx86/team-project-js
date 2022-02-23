@@ -3,6 +3,12 @@
   justify-content: center;
   align-items: center;
   gap: 4px;
+  transition: opacity 250ms linear, visibility 250ms linear;
+  &.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
 }
 .pagination__button {
   width: 40px;
@@ -53,5 +59,11 @@
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+  }
+}
+.hide {
+  display: none;
+  @include mq(tablet) {
+    display: inline-flex;
   }
 }
