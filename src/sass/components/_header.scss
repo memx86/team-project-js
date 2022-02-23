@@ -1,10 +1,12 @@
 //////////////////HEADER/////////////////////////////////
 .header {
+  position: relative;
   padding-top: 24px;
   padding-bottom: 97px;
   margin-left: auto;
   margin-right: auto;
   background-size: cover;
+  height: 230px;
 
   background-image: url('/images/header-overlay/header-overlay-sm.png');
   background-image: -webkit-image-set(url('/images/header-overlay/header-overlay-sm.webp') 1x);
@@ -38,6 +40,8 @@
       );
     }
   }
+
+  transition: background-image 500ms linear, transform 500ms ease-in-out;
 
   &__icon {
     width: 24px;
@@ -141,6 +145,18 @@
     width: 100%;
     height: 3px;
     background-color: var(--accent-cl);
+    animation-name: changes;
+    animation-duration: 250ms;
+    animation-timing-function: linear;
+    animation-fill-mode: backwards;
+  }
+  @keyframes changes {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 }
 

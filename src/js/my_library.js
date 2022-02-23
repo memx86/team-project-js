@@ -367,8 +367,13 @@ function onClickMyLibBtn() {
   }
   changeClassA('current');
   changeClassBtn('btn--on', 'btn--off');
-  refs.libBtnsContainer.classList.remove('is-hidden');
-  refs.inputForm.classList.add('is-hidden');
+  refs.libBtnsContainer.classList.remove('opacity');
+  refs.inputForm.classList.add('opacity');
+  const on = setTimeout(() => {
+    refs.libBtnsContainer.classList.remove('is-hidden');
+    refs.inputForm.classList.add('is-hidden');
+  }, 250);
+
   refs.gallery.innerHTML = '';
   refs.header.classList.add('myLib');
   if (!watched) {
@@ -383,8 +388,13 @@ function onClickMyHomeBtn() {
     return;
   }
   changeClassA('current');
-  refs.libBtnsContainer.classList.add('is-hidden');
-  refs.inputForm.classList.remove('is-hidden');
+  refs.libBtnsContainer.classList.add('opacity');
+  refs.inputForm.classList.remove('opacity');
+  const on = setTimeout(() => {
+    refs.libBtnsContainer.classList.add('is-hidden');
+    refs.inputForm.classList.remove('is-hidden');
+  }, 250);
+
   refs.header.classList.remove('myLib');
   refs.gallery.innerHTML = '';
 }
