@@ -12,6 +12,7 @@ export default class Storage {
     MOVIES: 'filmoteka/movies',
     WATCHED: 'filmoteka/watched',
     QUEUED: 'filmoteka/queued',
+    GENRES: 'filmoteka/genres',
   };
   constructor(key) {
     this.key = key;

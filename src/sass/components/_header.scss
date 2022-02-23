@@ -103,6 +103,11 @@
     background-color: transparent;
     border: none;
     cursor: pointer;
+    transition: transform 250ms linear;
+
+    &:hover {
+      transform: scale(1.2);
+    }
   }
 
   &__icon {
