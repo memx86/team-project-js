@@ -5,6 +5,10 @@
 .card-item {
   position: relative;
 }
+.container_movie-info {
+  display: flex;
+  flex-wrap: nowrap;
+}
 
 .movie-title {
   text-transform: uppercase;
