@@ -52,8 +52,6 @@
 
     @include mq(tablet) {
       font-family: Roboto;
-      font-style: normal;
-      font-weight: 500;
       font-size: 30px;
       line-height: 1.16;
       margin-left: 10px;
@@ -100,7 +98,7 @@
     color: var(--main-light-cl);
     padding-bottom: 4px;
     border: none;
-    border-bottom: 0.5px solid #ffffff;
+    border-bottom: 0.5px solid var(--main-light-cl);
 
     &::placeholder {
       color: var(--main-light-cl);
@@ -132,8 +130,6 @@
 
   &__link {
     position: relative;
-    font-family: Roboto;
-    font-style: normal;
     font-weight: 500;
     font-size: 12px;
     line-height: 1.16;
