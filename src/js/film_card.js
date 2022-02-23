@@ -1,3 +1,4 @@
+import notFoundImg from '../images/film_card/No image found yet!.jpg';
 const movieListRef = document.querySelector('.gallery');
 
 const makeMoviesMarkup = movies =>
@@ -25,7 +26,7 @@ height="398"
 
 const renderMarkup = movies => {
   const markup = makeMoviesMarkup(movies);
-  movieListRef.incertAdjacentHTML('beforeend', markup);
+  movieListRef.insertAdjacentHTML('beforeend', markup);
 };
 
 export { renderMarkup };
