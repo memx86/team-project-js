@@ -6,19 +6,22 @@ import ApiTMDB from "./services/apiTMDB";
 const submitForm = document.querySelector('.header-form');
 const gallery = document.querySelector('.gallery');
 
-const searchApi = new ApiTMDB;
+const searchApi = new ApiTMDB();
 
 const searchFilms = (e) => {
     gallery.innerHTML = '';
-    const value = e.target.value.trim();
+    const {
+    elements: { search }
+    } = e.currentTarget;
+    const value = search.value.trim();
     if (!value) {
         return;
     };
 
     searchApi.query = value;
-    const filmsPromis = searchApi.searchMovies();
-    filmsPromis.then((data) => {
-        renderMarkup(data);
+    
+    searchApi.searchMovies().then((data) => {
+        renderMarkup(data.results);
         return;
     }).catch(() => "error");
 };
