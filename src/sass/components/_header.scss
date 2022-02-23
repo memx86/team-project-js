@@ -130,6 +130,7 @@
     text-transform: uppercase;
     color: var(--main-light-cl);
     margin-top: 5px;
+    cursor: pointer;
   }
 
   &__link.current::after {
@@ -140,5 +141,37 @@
     width: 100%;
     height: 3px;
     background-color: var(--accent-cl);
+  }
+}
+
+.myLib {
+  padding-bottom: 70px;
+  background-image: url('/images/header-myLib/myLib-overlay-sm.png');
+  background-image: -webkit-image-set(url('/images/header-myLib/myLib-overlay-sm.webp') 1x);
+
+  @include retina() {
+    background-image: url('/images/header-myLib/myLib-overlay@2x-sm.png');
+    background-image: -webkit-image-set(url('/images/header-myLib/myLib-overlay@2x-sm.webp') 2x);
+  }
+
+  @include mq(tablet) {
+    padding-top: 41px;
+    background-image: url('/images/header-myLib/myLib-overlay-md.png');
+    background-image: -webkit-image-set(url('/images/header-myLib/myLib-overlay-md.webp') 1x);
+
+    @include retina() {
+      background-image: url('/images/header-myLib/myLib-overlay@2x-md.png');
+      background-image: -webkit-image-set(url('/images/header-myLib/myLib-overlay@2x-md.webp') 2x);
+    }
+  }
+
+  @include mq(desktop) {
+    background-image: url('/images/header-myLib/myLib-overlay-lg.png');
+    background-image: -webkit-image-set(url('/images/header-myLib/myLib-overlay-lg.webp') 1x);
+
+    @include retina() {
+      background-image: url('/images/header-myLib/myLib-overlay@2x-lg.png');
+      background-image: -webkit-image-set(url('/images/header-myLib/myLib-overlay@2x-lg.webp') 2x);
+    }
   }
 }
