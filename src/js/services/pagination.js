@@ -5,6 +5,7 @@
  * 2. page: текущая страница, по умолчанию 1.
  * 3. totalPages: общее количество страниц, по умолчанию 1.
  * * Сеттеры и геттеры для pages и totalPages
+ * * методы .hidePagination() и .showPagination()
  * * Пример создания экземпляра класса:
  * @example
  *  const pagination = new Pagination({
@@ -44,14 +45,17 @@ export default class Pagination {
     switch (btn) {
       case Pagination.#TYPES.PREV:
         this.goToPage(this.#page - 1);
+        this.callback(this.#page);
         break;
       case Pagination.#TYPES.NEXT:
         this.goToPage(this.#page + 1);
+        this.callback(this.#page);
         break;
       case Pagination.#TYPES.PAGE:
         const targetPage = this.getTargetPage(e.target);
         if (targetPage === this.#page) return;
         this.goToPage(targetPage);
+        this.callback(this.#page);
         break;
       default:
         return;
@@ -65,7 +69,6 @@ export default class Pagination {
     } else this.#page = this.#totalPages;
     this.#listFirstPage = this.#page - 2 > 1 ? this.#page - 2 : 1;
     this.#listLastPage = this.#page + 2 < this.#totalPages ? this.#page + 2 : this.#totalPages;
-    this.callback(this.#page);
     this.handleButtonsAndDots();
     this.createList();
   };
@@ -73,24 +76,28 @@ export default class Pagination {
     const buttons = [...this.getButtonsRef()];
 
     if (this.#listFirstPage <= 1) {
-      buttons[0].classList.add('is-hidden');
+      this.hideElement(buttons[0]);
     } else {
-      buttons[0].classList.remove('is-hidden');
+      this.showElement(buttons[0]);
     }
 
     if (this.#listFirstPage < 3) {
-      this.refs.dots[0].classList.add('is-hidden');
-    } else this.refs.dots[0].classList.remove('is-hidden');
-
-    if (this.#listLastPage >= this.#totalPages) {
-      buttons.at(-1).classList.add('is-hidden');
+      this.hideElement(this.refs.dots[0]);
     } else {
-      buttons.at(-1).classList.remove('is-hidden');
+      this.showElement(this.refs.dots[0]);
     }
 
-    if (this.#listLastPage > this.#totalPages - 1) {
-      this.refs.dots[1].classList.add('is-hidden');
-    } else this.refs.dots[1].classList.remove('is-hidden');
+    if (this.#listLastPage >= this.#totalPages) {
+      this.hideElement(buttons.at(-1));
+    } else {
+      this.showElement(buttons.at(-1));
+    }
+
+    if (this.#listLastPage > this.#totalPages - 2) {
+      this.hideElement(this.refs.dots[1]);
+    } else {
+      this.showElement(this.refs.dots[1]);
+    }
 
     if (this.#page === 1) {
       this.refs.prev.disabled = true;
@@ -102,6 +109,18 @@ export default class Pagination {
     } else {
       this.refs.next.disabled = false;
     }
+  };
+  hideElement = ref => {
+    ref.classList.add('is-hidden');
+  };
+  showElement = ref => {
+    ref.classList.remove('is-hidden');
+  };
+  hidePagination = () => {
+    this.hideElement(this.refs.pagination);
+  };
+  showPagination = () => {
+    this.showElement(this.refs.pagination);
   };
   getTargetPage = target => {
     const buttons = [...this.getButtonsRef()];
