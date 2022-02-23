@@ -1,0 +1,69 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  transition: opacity 250ms linear, visibility 250ms linear;
+  &.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+.pagination__button {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--main-text-cl);
+  background-color: transparent;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: color 250ms linear, background-color 250ms linear, opacity 250ms linear,
+    visibility 250ms linear;
+  &--bg {
+    background-color: var(--secondary-bg-cl);
+  }
+  &:not(:disabled):hover,
+  &:focus {
+    outline: none;
+    color: var(--main-light-cl);
+    background-color: var(--accent-cl);
+  }
+  &--active {
+    color: var(--main-light-cl);
+    background-color: var(--accent-cl);
+    &:hover,
+    &:focus {
+      background-color: transparent;
+      color: var(--main-text-cl);
+      border: 1px solid var(--accent-cl);
+    }
+  }
+  &.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+.pagination__pages {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.dots {
+  transition: opacity 250ms linear, visibility 250ms linear;
+  &.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+.hide {
+  display: none;
+  @include mq(tablet) {
+    display: inline-flex;
+  }
+}
