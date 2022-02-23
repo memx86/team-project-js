@@ -45,14 +45,17 @@ export default class Pagination {
     switch (btn) {
       case Pagination.#TYPES.PREV:
         this.goToPage(this.#page - 1);
+        this.callback(this.#page);
         break;
       case Pagination.#TYPES.NEXT:
         this.goToPage(this.#page + 1);
+        this.callback(this.#page);
         break;
       case Pagination.#TYPES.PAGE:
         const targetPage = this.getTargetPage(e.target);
         if (targetPage === this.#page) return;
         this.goToPage(targetPage);
+        this.callback(this.#page);
         break;
       default:
         return;
@@ -66,7 +69,6 @@ export default class Pagination {
     } else this.#page = this.#totalPages;
     this.#listFirstPage = this.#page - 2 > 1 ? this.#page - 2 : 1;
     this.#listLastPage = this.#page + 2 < this.#totalPages ? this.#page + 2 : this.#totalPages;
-    this.callback(this.#page);
     this.handleButtonsAndDots();
     this.createList();
   };
@@ -91,7 +93,7 @@ export default class Pagination {
       this.showElement(buttons.at(-1));
     }
 
-    if (this.#listLastPage > this.#totalPages - 1) {
+    if (this.#listLastPage > this.#totalPages - 2) {
       this.hideElement(this.refs.dots[1]);
     } else {
       this.showElement(this.refs.dots[1]);
