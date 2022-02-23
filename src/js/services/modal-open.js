@@ -17,16 +17,16 @@ const closeBtnRef = document.querySelector(`[data-modal-close="movie-one"]`);
 const wrapperModalRef = document.querySelector('.wrapper-modal');
 
 // Функция для тестировки запроса по получению 20 фильмов
-async function fetchMovies(event) {
-  try {
-    const data = await apiTMDB.getTrending();
-    const { results } = data;
-    renderMarkup(results);
-  } catch (error) {
-    console.log(error);
-    handleError();
-  }
-}
+// async function fetchMovies(event) {
+//   try {
+//     const data = await apiTMDB.getTrending();
+//     const { results } = data;
+//     renderMarkup(results);
+//   } catch (error) {
+//     console.log(error);
+//     handleError();
+//   }
+// }
 
 // Функция создающая разметку для одного фильма
 function makeOneMovieMarkup(dataMovie) {
@@ -89,9 +89,6 @@ function clearModal() {
   wrapperModalRef.innerHTML = '';
 }
 
-//  временный вызов функции для получения 20 карточек и их рендера
-fetchMovies();
-
 // Функция для сообщения пользователю об ошибке
 const handleError = () => {
   console.log(1111);
@@ -142,5 +139,10 @@ function onBtnClick(e) {
   closeModal();
 }
 
-// вешаем слушателя на общего родителя галерею
-movieListRef.addEventListener('click', onModalOpenClick);
+function onModalCard() {
+  //  временный вызов функции для получения 20 карточек и их рендера
+  //   fetchMovies();
+  // вешаем слушателя на общего родителя галерею
+  movieListRef.addEventListener('click', onModalOpenClick);
+}
+export { onModalCard };
