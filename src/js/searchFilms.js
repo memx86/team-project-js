@@ -1,4 +1,4 @@
-import renderMarkup from './film_card';
+import { renderMarkup } from './film_card';
 import ApiTMDB from './services/apiTMDB';
 import Pagination from './services/pagination';
 import Storage from './services/storage';
@@ -9,13 +9,14 @@ const ERROR_MESSAGE = 'Search is not successful. Enter the correct movie name.';
 const searchApi = new ApiTMDB();
 const storage = new Storage(Storage.KEYS.MOVIES);
 
-const pagination = new Pagination({
-  callback: paginationCallback,
-});
 const paginationCallback = page => {
   searchApi.page = page;
   searchApi.searchMovies().then(handleSuccess);
 };
+const pagination = new Pagination({
+  callback: paginationCallback,
+});
+
 const handleSuccess = ({ results, total_pages: totalPages }) => {
   gallery.innerHTML = '';
   renderMarkup(results);
