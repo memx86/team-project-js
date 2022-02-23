@@ -1,5 +1,27 @@
+.gallery-section {
+  @include mq(tablet) {
+    padding: 60px 75px 50px 75px;
+  }
+
+  @include mq(desktop) {
+    padding-left: 71px;
+    padding-right: 71px;
+  }
+}
+
 .gallery {
   list-style: none;
+  display: grid;
+  gap: 20px 20px;
+
+  @include mq(tablet) {
+    gap: 30px 30px;
+    grid-template-columns: repeat(2, 294px);
+  }
+
+  @include mq(desktop) {
+    grid-template-columns: repeat(3, 274px);
+  }
 }
 
 .card-item {
@@ -12,11 +34,12 @@
 }
 
 .movie-info {
+  position: relative;
   color: var(--accent-cl);
 }
 
 .movie-info:not(:last-child)::after {
-  content: '';
+  content: ' ';
   display: block;
   width: 1px;
   height: 100%;
@@ -25,6 +48,7 @@
   top: 0;
   right: -10px;
 }
+
 .movie-rating {
   padding: 1px 10px;
   border: none;
@@ -36,12 +60,21 @@
 }
 
 .movie-img {
+  margin-bottom: 10px;
   border: none;
   border-radius: 5px;
+  object-fit: cover;
+  width: 100%;
+
   @include mq(tablet) {
-    width: 294px;
+    height: 398px;
   }
-  @include mq(desktop) {
-    width: 274px;
-  }
+}
+
+.popular-movie-card__meta {
+  display: flex;
+}
+
+.popular-movie-info__year {
+  margin-left: 20px;
 }
