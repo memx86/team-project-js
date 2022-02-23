@@ -1,36 +1,46 @@
 import ApiTMDB from './apiTMDB';
+import { renderMarkup } from '../film_card';
+import Storage from './storage';
 
 // Создаем экземпляры классов
 const apiTMDB = new ApiTMDB();
+const storage = new Storage('MOVIES');
 
-const modalDiv = document.querySelector('[data-modal="movie-one"]')
+// получаем ссылку на бэкдроп
+const backdropRef = document.querySelector(`[data-modal="movie-one"]`);
+// получаем ссылку на модалку
+const modalRef = document.querySelector(`.modal`);
+// получаем ссылку на галерею в которую рендерятся карточки фильмов
+const movieListRef = document.querySelector('.gallery');
+// получаем ссылку на кнопку закрытия модалки
+const closeBtnRef = document.querySelector(`[data-modal-close="movie-one"]`);
+const wrapperModalRef = document.querySelector('.wrapper-modal');
 
 // Функция для тестировки запроса по получению 20 фильмов
 async function fetchMovies(event) {
-    try {
-        event.preventDefault();
-        const data = await apiTMDB.getTrending();
-        apiTMDB.id = data.results[0].id;
-        const dataMovie = await apiTMDB.getMovie();
-            modalDiv.insertAdjacentHTML('beforeend', makeOneMovieMarkup(dataMovie))
-
-    } catch (error) {
-        console.log(error);
-        handleError()
-    }    
+  try {
+    const data = await apiTMDB.getTrending();
+    const { results } = data;
+    renderMarkup(results);
+  } catch (error) {
+    console.log(error);
+    handleError();
+  }
 }
-
 
 // Функция создающая разметку для одного фильма
 function makeOneMovieMarkup(dataMovie) {
-    const { title, poster_path, genre_ids, vote_average, vote_count, original_title, overview, popularity } = dataMovie;
-        return `<div class="modal">
-    <button class="modal-close" type="button" data-modal-close="movie-one">
-        <svg class="modal__icon--close" id="" width="14" height="14">
-            <use href="../images/sprite.svg#icon-close"></use>
-        </svg>
-    </button>
-    <div class="modal__content">
+  const {
+    title,
+    poster_path,
+    genre_ids,
+    vote_average,
+    vote_count,
+    original_title,
+    overview,
+    popularity,
+  } = dataMovie;
+  return `<div class="modal__content">
         <div class="poster__wrapper">
             <img class="poster__img" alt="${title}" src="https://image.tmdb.org/t/p/w500${poster_path}" loading="lazy" />
         </div>
@@ -51,7 +61,7 @@ function makeOneMovieMarkup(dataMovie) {
                     <li class="movie__item--right">
                         <span class="movie__average">${vote_average}</span>
                         <span>&#47</span>
-                        <span class="movie__count">${vote_count}</span></p>
+                        <span class="movie__count">${vote_count}</span>
                     </li>
                     <li class="movie__item--right">${popularity}
                     </li>
@@ -65,183 +75,72 @@ function makeOneMovieMarkup(dataMovie) {
                 <h3 class="movie__about uppercase">About</h3>
                 <p class="movie__text">${overview}</p>
             </div>
-            <ul class="movie__btn">
-                <li>
-                    <button type="button" class="" id="watched">add to Watched</button>
-                </li>
-                <li>
-                    <button type="button" class="" id="queue">add to queue</button>
-                </li>
-                <li>
-                    <button type="button" class="" id="trailer">trailer</button>
-                </li>
-            </ul>
+            <div class="movie__btn buttons__container">
+                    <button type="button" class="btn--modal btn--on" id="watched">add to Watched</button>
+                    <button type="button" class="btn--modal btn--on" id="queue">add to queue</button>
+                    <button type="button" class="btn--modal btn--on" id="trailer">trailer</button>
+            </div>
         </div>
-    </div>
-</div>`
-}
-
-// Функция, которая рендерит разметку в модальном окне
-function renderMovieModal() {
-
-
-    modalDiv.insertAdjacentHTML('beforeend', makeOneMovieMarkup(dataMovie).join())
-   
+    </div>`;
 }
 
 // Функция для очищения разметки в модальном окне
 function clearModal() {
-    modalOneMovie.refs.modal.innerHTML = '';
+  wrapperModalRef.innerHTML = '';
 }
 
-// Функция для получения id фильма выбранного пользователем в галерее фильмов и открытия модального окна
-function openMovieInModal(event) {
-    event.preventDefault();
-    // fetchMovies() 
-    apiTMDB.getTrending()
-        .then(data => {
-            apiTMDB.id = data.results[0].id;
-            apiTMDB.getMovie().then(data => renderMovieModal(data)).catch(handleError);
-    })
-}
-
-window.addEventListener('click', fetchMovies)
+//  временный вызов функции для получения 20 карточек и их рендера
+fetchMovies();
 
 // Функция для сообщения пользователю об ошибке
-const handleError=()=>{
-    console.log(1111);
-}
-
-
-
-
-
-export { makeOneMovieMarkup };
-
+const handleError = () => {
+  console.log(1111);
+};
 
 // Функция для модального окна
-//     export default class Modal {
-//   constructor(name) {
-//     this.refs = {
-//       modal: document.querySelector(`[data-modal="${name}"]`),
-//         closeBtn: document.querySelector(`[data-modal-close="${name}"]`),
-       
-//       };
-//       const  items= document.querySelectorAll(`li`),
-      
-//     this.refs.openLi.addEventListener('click', this.onModalOpenLiClick);
-//   }
-//   onModalOpenLiClick = () => {
-//     this.openModal();
-//     this.refs.closeBtn.addEventListener('click', this.closeModal);
-//     this.refs.modal.addEventListener('click', this.onBackdropClick);
-//     document.addEventListener('keydown', this.onEscDown);
-//   };
-//   openModal = () => {
-//     this.refs.modal.classList.remove('is-hidden');
-//     document.body.classList.add('modal-open');
-//   };
-//   closeModal = () => {
-//     this.refs.modal.classList.add('is-hidden');
-//     document.body.classList.remove('modal-open');
-//     this.refs.closeBtn.removeEventListener('click', this.closeModal);
-//     this.refs.modal.removeEventListener('click', this.onBackdropClick);
-//     document.removeEventListener('keydown', this.onEscDown);
-//   };
-//   onBackdropClick = e => {
-//     if (e.target !== this.refs.modal) return;
-//     this.closeModal();
-//   };
-//   onEscDown = e => {
-//     if (e.code !== 'Escape') return;
-//     this.closeModal();
-//   };
-// }
+async function onModalOpenClick(event) {
+  const cardRef = event.target.closest('.card-item');
+  if (event.target === event.currentTarget || !cardRef) {
+    return;
+  }
+  apiTMDB.id = cardRef.dataset.id;
 
+  const dataMovie = await apiTMDB.getMovie();
 
-// "id": 632727,
-// "title": "Texas Chainsaw Massacre",
-// "overview": "In this sequel, influencers looking to breathe new life into a Texas ghost town encounter Leatherface, an infamous killer who wears a mask of human skin.",
-// "release_date": "2022-02-18",
-// "adult": false,
-// "backdrop_path": "/aTSA5zMWlVFTYBIZxTCMbLkfOtb.jpg",
-// "vote_count": 291,
-// "genre_ids": [
-// 27
-// ],
-// "vote_average": 5.3,
-// "original_language": "en",
-// "original_title": "Texas Chainsaw Massacre",
-// "poster_path": "/meRIRfADEGVo65xgPO6eZvJ0CRG.jpg",
-// "video": false,
-// "popularity": 316.107,
-// "media_type": "movie"
+  wrapperModalRef.insertAdjacentHTML('beforeend', makeOneMovieMarkup(dataMovie));
 
+  openModal();
 
-// {
-// "adult": false,
-// "backdrop_path": "/aTSA5zMWlVFTYBIZxTCMbLkfOtb.jpg",
-// "belongs_to_collection": {
-// "id": 111751,
-// "name": "Texas Chainsaw Massacre Collection",
-// "poster_path": "/uA7YQaZDecsGKGuHoYFk4BtCTqJ.jpg",
-// "backdrop_path": "/9V5kaGBAjzwHmqvmZuazY9SbZwi.jpg"
-// },
-// "budget": 20000000,
-// "genres": [
-// {
-// "id": 27,
-// "name": "Horror"
-// }
-// ],
-// "homepage": "https://www.netflix.com/title/81483977",
-// "id": 632727,
-// "imdb_id": "tt11755740",
-// "original_language": "en",
-// "original_title": "Texas Chainsaw Massacre",
-// "overview": "In this sequel, influencers looking to breathe new life into a Texas ghost town encounter Leatherface, an infamous killer who wears a mask of human skin.",
-// "popularity": 316.107,
-// "poster_path": "/meRIRfADEGVo65xgPO6eZvJ0CRG.jpg",
-// "production_companies": [
-// {
-// "id": 923,
-// "logo_path": "/5UQsZrfbfG2dYJbx8DxfoTr2Bvu.png",
-// "name": "Legendary Pictures",
-// "origin_country": "US"
-// },
-// {
-// "id": 125512,
-// "logo_path": null,
-// "name": "Bad Hombre Films",
-// "origin_country": "US"
-// },
-// {
-// "id": 142183,
-// "logo_path": null,
-// "name": "Exurbia Films",
-// "origin_country": "US"
-// }
-// ],
-// "production_countries": [
-// {
-// "iso_3166_1": "US",
-// "name": "United States of America"
-// }
-// ],
-// "release_date": "2022-02-18",
-// "revenue": 0,
-// "runtime": 81,
-// "spoken_languages": [
-// {
-// "english_name": "English",
-// "iso_639_1": "en",
-// "name": "English"
-// }
-// ],
-// "status": "Released",
-// "tagline": "The face of madness returns.",
-// "title": "Texas Chainsaw Massacre",
-// "video": false,
-// "vote_average": 5.2,
-// "vote_count": 307
-// }
+  closeBtnRef.addEventListener('click', closeModal);
+  backdropRef.addEventListener('click', onBackdropClick);
+  document.addEventListener('keydown', onEscDown);
+}
+
+function openModal() {
+  backdropRef.classList.remove('is-hidden');
+  document.body.classList.add('modal-open');
+}
+
+function closeModal() {
+  backdropRef.classList.add('is-hidden');
+  document.body.classList.remove('modal-open');
+  closeBtnRef.removeEventListener('click', onBtnClick);
+  backdropRef.removeEventListener('click', onBackdropClick);
+  document.removeEventListener('keydown', onEscDown);
+  clearModal();
+}
+function onBackdropClick(e) {
+  if (e.target !== backdropRef) return;
+  closeModal();
+}
+function onEscDown(e) {
+  if (e.code !== 'Escape') return;
+  closeModal();
+}
+function onBtnClick(e) {
+  if (e.code !== closeBtnRef) return;
+  closeModal();
+}
+
+// вешаем слушателя на общего родителя галерею
+movieListRef.addEventListener('click', onModalOpenClick);

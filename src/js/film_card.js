@@ -2,10 +2,10 @@ const movieListRef = document.querySelector('.gallery');
 
 const makeMoviesMarkup = movies =>
   movies
-    .map(({ title, release_date, poster_path, genre_ids, vote_count }) => {
+    .map(({ title, release_date, poster_path, id, genre_ids, vote_count }) => {
       const year = new Date(release_date).getFullYear();
       return `
-      <li class="card-item">
+      <li class="card-item" data-id="${id}">
 <div class = "movie-card">
 <img class="movie-img"
 src="https://image.tmdb.org/t/p/w500${poster_path}"
@@ -25,7 +25,7 @@ height="398"
 
 const renderMarkup = movies => {
   const markup = makeMoviesMarkup(movies);
-  movieListRef.incertAdjacentHTML('beforeend', markup);
+  movieListRef.insertAdjacentHTML('beforeend', markup);
 };
 
 export { renderMarkup };
