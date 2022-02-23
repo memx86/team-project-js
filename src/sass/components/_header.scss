@@ -5,16 +5,40 @@
   margin-left: auto;
   margin-right: auto;
   background-image: url('/images/header-overlay/header-overlay-sm.png');
+  background-image: -webkit-image-set(url('/images/header-overlay/header-overlay-sm.webp') 1x);
+
+  @include retina() {
+    background-image: url('/images/header-overlay/header-overlay@2x-sm.png');
+    background-image: -webkit-image-set(
+      url('/src/images/header-overlay/header-overlay@2x-sm.webp') 2x
+    );
+  }
 
   @include mq(tablet) {
     padding-top: 41px;
     background-image: url('/images/header-overlay/header-overlay-md.png');
+    background-image: -webkit-image-set(url('/images/header-overlay/header-overlay-md.webp') 1x);
+
+    @include retina() {
+      background-image: url('/images/header-overlay/header-overlay@2x-md.png');
+      background-image: -webkit-image-set(
+        url('/images/header-overlay/header-overlay@2x-md.webp') 2x
+      );
+    }
   }
 
   @include mq(desktop) {
     padding-top: 41px;
     background-image: url('/images/header-overlay/header-overlay-lg.png');
+    background-image: -webkit-image-set(url('/images/header-overlay/header-overlay-lg.webp') 1x);
+
     background-size: cover;
+    @include retina() {
+      background-image: url('/images/header-overlay/header-overlay@2x-lg.png');
+      background-image: -webkit-image-set(
+        url('/images/header-overlay/header-overlay@2x-lg.webp') 2x
+      );
+    }
   }
 
   &__icon {
