@@ -25,7 +25,7 @@ height="398"
 
 const renderMarkup = movies => {
   const markup = makeMoviesMarkup(movies);
-  movieListRef.incertAdjacentHTML('beforeend', markup);
+  movieListRef.insertAdjacentHTML('beforeend', markup);
 };
 
 export { renderMarkup };
