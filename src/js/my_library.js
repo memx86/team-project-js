@@ -346,51 +346,68 @@ const test = [
 const LOCALSTORAGE_WATCHED = test;
 const LOCALSTORAGE_QUEUE = test;
 
-renderMarkup(test);
-
 const refs = {
-  myLibBtn: document.querySelector('selector'),
-  homeBtn: document.querySelector('selector'),
+  myLibBtn: document.querySelector('[data-btn="myLibrary"]'),
+  myLibA: document.querySelector('[data-a="myLibrary"]'),
+  homeBtn: document.querySelector('[data-btn="home"]'),
+  homeA: document.querySelector('[data-a="home"]'),
   watchedBtn: document.querySelector('[data-btn="watched"]'),
   queueBtn: document.querySelector('[data-btn="queue"]'),
-  libBtnsContainer: document.querySelector('selector'),
-  inputForm: document.querySelector('selector'),
+  libBtnsContainer: document.querySelector('.buttons__container'),
+  inputForm: document.querySelector('.header-form'),
   headerBgc: document.querySelector('selector'),
-  //gallery: document.querySelector('.gallery'),
+  gallery: document.querySelector('.gallery'),
+  header: document.querySelector('.header'),
 };
 
-refs.myLibBtn.addEventListener('click', () => {
+function onClickMyLibBtn() {
+  if (refs.myLibA.classList.contains('current')) {
+    return;
+  }
+  changeClassA('current');
+  changeClassBtn('btn--on', 'btn--off');
   refs.libBtnsContainer.classList.remove('is-hidden');
   refs.inputForm.classList.add('is-hidden');
-  changeBackgroundHeader('myLib', 'home');
   refs.gallery.innerHTML = '';
+  refs.header.classList.add('myLib');
   if (!LOCALSTORAGE_WATCHED) {
     refs.gallery.innerHTML = 'img';
     return;
   }
-  renderMarkup(LOCALSTORAGE_WATCHED);
-});
+}
 
-refs.homeBtn.addEventListener('click', () => {
+function onClickMyHomeBtn() {
+  if (refs.homeA.classList.contains('current')) {
+    return;
+  }
+  changeClassA('current');
   refs.libBtnsContainer.classList.add('is-hidden');
+  refs.inputForm.classList.remove('is-hidden');
+  refs.header.classList.remove('myLib');
   refs.gallery.innerHTML = '';
-  changeBackgroundHeader('home', 'myLib');
-});
+  renderMarkup(LOCALSTORAGE_QUEUE);
+  if (!LOCALSTORAGE_QUEUE) {
+    refs.gallery.innerHTML = 'img';
+    return;
+  }
+}
 
-refs.watchedBtn.addEventListener('click', () => {
-  console.log(qweqwe);
+function onClickMyWatchedBtn() {
+  console.log('qweqwe');
+  refs.gallery.innerHTML = '';
   changeClassBtn('btn--on', 'btn--off');
   renderMarkup(LOCALSTORAGE_WATCHED);
-});
+  if (!LOCALSTORAGE_WATCHED) {
+    refs.gallery.innerHTML = 'img';
+    return;
+  }
+}
 
-refs.queueBtn.addEventListener('click', () => {
+function onClickMyQueueBtn() {
+  console.log('asdasde');
+  refs.gallery.innerHTML = '';
   changeClassBtn('btn--off', 'btn--on');
   renderMarkup(LOCALSTORAGE_QUEUE);
-});
-
-function changeBackgroundHeader(add, remove) {
-  refs.headerBgc.classList.add(add);
-  refs.headerBgc.classList.remove(remove);
 }
 
 function changeClassBtn(add, remove) {
@@ -398,4 +415,16 @@ function changeClassBtn(add, remove) {
   refs.watchedBtn.classList.remove(remove);
   refs.queueBtn.classList.add(remove);
   refs.queueBtn.classList.remove(add);
+}
+
+function changeClassA(csassA) {
+  refs.myLibA.classList.toggle(csassA);
+  refs.homeA.classList.toggle(csassA);
+}
+
+export default function myLibrary() {
+  refs.myLibBtn.addEventListener('click', onClickMyLibBtn);
+  refs.homeBtn.addEventListener('click', onClickMyHomeBtn);
+  refs.watchedBtn.addEventListener('click', onClickMyWatchedBtn);
+  refs.queueBtn.addEventListener('click', onClickMyQueueBtn);
 }

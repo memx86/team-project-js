@@ -1,9 +1,13 @@
 .buttons__container {
   display: flex;
 }
-
+.buttons__container--header {
+  justify-content: center;
+  margin-top: 45px;
+}
 .btn--modal,
 .btn--header {
+  cursor: pointer;
   text-transform: uppercase;
   height: 44px;
   border-radius: 5px;
@@ -44,4 +48,15 @@
   background-color: var(--accent-cl);
   color: var(--main-light-cl);
   border: none;
+}
+
+.is-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip: rect(0 0 0 0);
 }
