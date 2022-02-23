@@ -1,4 +1,4 @@
-import { renderMarkup } from './services/popularMoviesCard';
+import { renderMarkup } from './film_card';
 import ApiTMDB from './services/apiTMDB';
 import Storage from './services/storage';
 import Pagination from './services/pagination';
