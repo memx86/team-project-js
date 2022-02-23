@@ -41,13 +41,16 @@ export default class Pagination {
     this.goToPage(page);
   }
   handlePaginationClick = e => {
-    const btn = e.target.dataset.btn;
+    const target = e.target.dataset.btn ? e.target : e.target.closest('BUTTON');
+    const btn = target?.dataset.btn;
     switch (btn) {
       case Pagination.#TYPES.PREV:
+        if (this.#page === 1) return;
         this.goToPage(this.#page - 1);
         this.callback(this.#page);
         break;
       case Pagination.#TYPES.NEXT:
+        if (this.#page === this.#totalPages) return;
         this.goToPage(this.#page + 1);
         this.callback(this.#page);
         break;
