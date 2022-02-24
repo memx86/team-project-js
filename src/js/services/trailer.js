@@ -12,9 +12,6 @@ const backdrop = document.querySelector('[data-modal="trailer"]');
 const trailerWindow = document.querySelector('.trailer');
 const trailerWindowBtn = document.querySelector('#trailer');
 
-
-
-
 // функция открытия модалки с трейлером
 function openTrailerFunction() {
     const endpoint = `${ApiTMDB.#ENDPOINTS.GET_MOVIE}/${this.#id}/videos`;

@@ -1,0 +1,19 @@
+.trailer {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  background-color: var(--main-light-cl);
+  @include mq(mobile) {
+    width: 280px;
+  }
+  @include mq(tablet) {
+    width: 618px;
+    min-height: 562px;
+  }
+  @include mq(desktop) {
+    width: 882px;
+    min-height: 568px;
+  }
+}
