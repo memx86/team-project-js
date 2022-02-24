@@ -1,26 +1,16 @@
-import { renderMarkup } from './film_card';
-import ApiTMDB from './services/apiTMDB';
-import Storage from './services/storage';
-import Pagination from './services/pagination';
+import { renderMarkup } from './templates/film_card';
+import { api, pagination } from './services';
 
 const gallery = document.querySelector('.gallery');
 
-const apiPopular = new ApiTMDB();
-const localStorageGenres = new Storage(Storage.KEYS.GENRES);
-const pagination = new Pagination({
-  callback: moreMovies,
-});
-
-async function renderMovies() {
+async function popularMovies() {
   try {
     gallery.innerHTML = ' ';
-    const genres = await apiPopular.getGenres();
-    localStorageGenres.save(genres);
-
-    const movies = await apiPopular.getTrending();
-    renderMarkup(movies.results, genres);
-
-    pagination.totalPages = movies.total_pages;
+    const { results, total_pages: totalPages } = await api.getTrending();
+    renderMarkup(results);
+    pagination.page = api.page;
+    pagination.totalPages = totalPages;
+    pagination.callback = moreMovies;
     pagination.showPagination();
   } catch (error) {
     console.log(error);
@@ -30,14 +20,12 @@ async function renderMovies() {
 async function moreMovies() {
   try {
     gallery.innerHTML = ' ';
-    apiPopular.page = pagination.page;
-    const genresArr = localStorageGenres.get();
-
-    const movies = await apiPopular.getTrending();
-    renderMarkup(movies.results, genresArr);
+    api.page = pagination.page;
+    const { results } = await api.getTrending();
+    renderMarkup(results);
   } catch (error) {
     console.log(error);
   }
 }
 
-renderMovies();
+export default popularMovies;
