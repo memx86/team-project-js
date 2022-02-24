@@ -1,17 +1,12 @@
-import { genresStorage } from '../services';
+import { getGenresNames } from '../services';
 import notFoundImg from '../../images/film_card/poster-img.jpg';
 import notFoundImgRetina from '../../images/film_card/poster-img@2x.jpg';
 const movieListRef = document.querySelector('.gallery');
 
-const arr = genresStorage.get();
-
 const makeMoviesMarkup = movies =>
   movies
-    .map(({ title, release_date, poster_path, id, genre_ids, vote_average }) => {
-      const genresNames = genre_ids.map(id => {
-        const { name } = arr.find(item => item.id === id);
-        return name;
-      });
+    .map(({ title, release_date, poster_path, id, genre_ids: genresIds, vote_average }) => {
+      const genresNames = getGenresNames(genresIds);
       const year = new Date(release_date).getFullYear();
       const poster2x = poster_path
         ? `https://image.tmdb.org/t/p/w500${poster_path}`

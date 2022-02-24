@@ -6,7 +6,7 @@
  * Модальное окно закрывается по клику на кнопку закрытия, по клику в бэкдроп,
  * по нажатию клавиши "Esc"
  */
-export default class Modal {
+class Modal {
   constructor(name) {
     this.refs = {
       modal: document.querySelector(`[data-modal="${name}"]`),
@@ -43,3 +43,4 @@ export default class Modal {
     this.closeModal();
   };
 }
+export { Modal };
