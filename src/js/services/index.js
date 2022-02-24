@@ -9,6 +9,6 @@ const queuedStorage = new Storage(Storage.KEYS.QUEUED);
 const watchedStorage = new Storage(Storage.KEYS.WATCHED);
 const pagination = new Pagination({});
 
-export { default as Modal } from './modal';
-export { default as getGenresNames } from './getGenresNames';
+export { Modal } from './modal';
+export { getGenresNames } from './getGenresNames';
 export { api, genresStorage, moviesStorage, queuedStorage, watchedStorage, pagination };

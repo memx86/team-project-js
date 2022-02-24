@@ -25,6 +25,7 @@ const searchFilms = async e => {
   if (!query) {
     return;
   }
+  api.page = 1;
   api.query = query;
   try {
     const data = await api.searchMovies();
