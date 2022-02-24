@@ -3,13 +3,14 @@ export default function makeOneMovieMarkup(dataMovie) {
   const {
     title,
     poster_path,
-    genre_ids,
+    genres,
     vote_average,
     vote_count,
     original_title,
     overview,
     popularity,
   } = dataMovie;
+  const genresNames = genres.map(genre => genre.name).join(', ');
   return `<div class="modal__content">
         <div class="poster__wrapper">
             <img class="poster__img" alt="${title}" src="https://image.tmdb.org/t/p/w500${poster_path}" loading="lazy" />
@@ -37,7 +38,7 @@ export default function makeOneMovieMarkup(dataMovie) {
                     </li>
                     <li class="movie__item--right uppercase">${original_title}
                     </li>
-                    <li class="movie__item--right">${genre_ids}
+                    <li class="movie__item--right">${genresNames}
                     </li>
                 </ul>
             </div>
