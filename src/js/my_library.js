@@ -1,5 +1,6 @@
-import { renderMarkup } from './film_card';
-import Storage from './services/storage';
+import { watchedStorage, queuedStorage, pagination } from './services';
+import { renderMarkup } from './templates/film_card';
+import popularMovies from './popular_movies';
 
 const test = [
   {
@@ -343,10 +344,6 @@ const test = [
     vote_count: 15516,
   },
 ];
-const storageWatched = new Storage(Storage.KEYS.WATCHED);
-const storageQueue = new Storage(Storage.KEYS.QUEUED);
-const watched = storageWatched.get();
-const queue = storageQueue.get();
 
 const refs = {
   myLibBtn: document.querySelector('[data-btn="myLibrary"]'),
@@ -365,12 +362,14 @@ function onClickMyLibBtn() {
   if (refs.myLibA.classList.contains('current')) {
     return;
   }
+  pagination.hidePagination();
   changeClassA('current');
   changeClassBtn('btn--on', 'btn--off');
   refs.libBtnsContainer.classList.remove('is-hidden');
   refs.inputForm.classList.add('is-hidden');
   refs.gallery.innerHTML = '';
   refs.header.classList.add('myLib');
+  const watched = watchedStorage.get();
   if (!watched) {
     refs.gallery.innerHTML = 'img заглушка';
     return;
@@ -382,6 +381,7 @@ function onClickMyHomeBtn() {
   if (refs.homeA.classList.contains('current')) {
     return;
   }
+  popularMovies();
   changeClassA('current');
   refs.libBtnsContainer.classList.add('is-hidden');
   refs.inputForm.classList.remove('is-hidden');
@@ -392,6 +392,7 @@ function onClickMyHomeBtn() {
 function onClickMyWatchedBtn() {
   refs.gallery.innerHTML = '';
   changeClassBtn('btn--on', 'btn--off');
+  const watched = watchedStorage.get();
   if (!watched) {
     refs.gallery.innerHTML = 'img заглушка';
     return;
@@ -400,6 +401,7 @@ function onClickMyWatchedBtn() {
 }
 
 function onClickMyQueueBtn() {
+  const queue = queuedStorage.get();
   refs.gallery.innerHTML = '';
   changeClassBtn('btn--off', 'btn--on');
   if (!queue) {

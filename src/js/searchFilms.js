@@ -1,42 +1,41 @@
-import { renderMarkup } from './film_card';
-import ApiTMDB from './services/apiTMDB';
-import Pagination from './services/pagination';
-import Storage from './services/storage';
+import { renderMarkup } from './templates/film_card';
+import { api, pagination, moviesStorage } from './services';
 
 const submitForm = document.querySelector('.header-form');
 const gallery = document.querySelector('.gallery');
 const ERROR_MESSAGE = 'Search is not successful. Enter the correct movie name.';
-const searchApi = new ApiTMDB();
-const storage = new Storage(Storage.KEYS.MOVIES);
 
 const paginationCallback = page => {
-  searchApi.page = page;
-  searchApi.searchMovies().then(handleSuccess);
+  api.page = page;
+  api.searchMovies().then(handleSuccess);
 };
-const pagination = new Pagination({
-  callback: paginationCallback,
-});
 
 const handleSuccess = ({ results, total_pages: totalPages }) => {
   gallery.innerHTML = '';
   renderMarkup(results);
-  storage.save(results);
+  moviesStorage.save(results);
+  pagination.callback = paginationCallback;
+  pagination.page = api.page;
   pagination.totalPages = totalPages;
 };
-const searchFilms = e => {
+const searchFilms = async e => {
+  e.preventDefault();
   gallery.innerHTML = '';
-  const query = e.currentTarget.elements.search.value.trim();
+  const query = e.target.elements.search.value.trim();
   if (!query) {
     return;
   }
-  searchApi.query = query;
-  searchApi
-    .searchMovies()
-    .then(data => {
-      handleSuccess(data);
-      pagination.showPagination();
-    })
-    .catch(() => ERROR_MESSAGE);
+  api.query = query;
+  try {
+    const data = await api.searchMovies();
+    handleSuccess(data);
+    pagination.showPagination();
+    e.target.reset();
+  } catch (error) {
+    console.error(error);
+  }
 };
-
-submitForm.addEventListener('submit', searchFilms);
+const search = () => {
+  submitForm.addEventListener('submit', searchFilms);
+};
+export default search;

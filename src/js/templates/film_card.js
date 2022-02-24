@@ -1,10 +1,9 @@
-import Storage from './services/storage';
-import notFoundImg from '../images/film_card/poster-img.jpg';
-import notFoundImgRetina from '../images/film_card/poster-img@2x.jpg';
+import { genresStorage } from '../services';
+import notFoundImg from '../../images/film_card/poster-img.jpg';
+import notFoundImgRetina from '../../images/film_card/poster-img@2x.jpg';
 const movieListRef = document.querySelector('.gallery');
 
-const genres = new Storage(Storage.KEYS.GENRES);
-const arr = genres.get();
+const arr = genresStorage.get();
 
 const makeMoviesMarkup = movies =>
   movies

@@ -24,6 +24,7 @@ export default class Pagination {
   };
   #page;
   #totalPages;
+  #callback;
   #listFirstPage;
   #listLastPage;
   constructor({ page = 1, totalPages = 1, callback = () => {} }) {
@@ -36,7 +37,7 @@ export default class Pagination {
     };
     this.refs.pagination.addEventListener('click', this.handlePaginationClick);
     this.#totalPages = totalPages;
-    this.callback = callback;
+    this.#callback = callback;
     this.getButtonsRef()[1].textContent = totalPages;
     this.goToPage(page);
   }
@@ -47,18 +48,18 @@ export default class Pagination {
       case Pagination.#TYPES.PREV:
         if (this.#page === 1) return;
         this.goToPage(this.#page - 1);
-        this.callback(this.#page);
+        this.#callback(this.#page);
         break;
       case Pagination.#TYPES.NEXT:
         if (this.#page === this.#totalPages) return;
         this.goToPage(this.#page + 1);
-        this.callback(this.#page);
+        this.#callback(this.#page);
         break;
       case Pagination.#TYPES.PAGE:
         const targetPage = this.getTargetPage(e.target);
         if (targetPage === this.#page) return;
         this.goToPage(targetPage);
-        this.callback(this.#page);
+        this.#callback(this.#page);
         break;
       default:
         return;
@@ -162,5 +163,11 @@ export default class Pagination {
     this.#totalPages = newTotalPages;
     [...this.getButtonsRef()].at(-1).textContent = this.#totalPages;
     this.goToPage(this.#page);
+  }
+  get callback() {
+    return this.#callback;
+  }
+  set callback(newCallback) {
+    this.#callback = newCallback;
   }
 }

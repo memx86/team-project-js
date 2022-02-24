@@ -1,13 +1,13 @@
-import ApiTMDB from './services/apiTMDB';
-import Storage from './services/storage';
+import genres from './genres';
+import popularMovies from './popular_movies';
+import search from './searchFilms';
+import filmModal from './film-modal';
 import myLibrary from './my_library';
-import { onModalCard } from './services/modal-open';
 
 export default async function app() {
-  const api = new ApiTMDB();
-  const genresStorage = new Storage(Storage.KEYS.GENRES);
-  const genres = await api.getGenres();
-  genresStorage.save(genres);
+  genres();
+  popularMovies();
+  search();
+  filmModal();
   myLibrary();
-  onModalCard();
 }
