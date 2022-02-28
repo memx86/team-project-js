@@ -1,6 +1,6 @@
-import ApiTMDB from './apiTMDB';
-import { renderMarkup } from '../film_card';
-import Storage from './storage';
+import ApiTMDB from './services/apiTMDB';
+import { renderMarkup } from './film_card';
+import Storage from './services/storage';
 
 // Создаем экземпляры классов
 const apiTMDB = new ApiTMDB();
