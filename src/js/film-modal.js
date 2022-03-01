@@ -114,7 +114,6 @@ function onModalButton(e) {
       }
       return;
     case BTNS.QUEUE:
-      changeBtnTextQueue(e.target);
       if (queued) {
         queuedStorage.deleteMovie(dataMovie.id);
       } else {
