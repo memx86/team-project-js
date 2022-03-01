@@ -1,4 +1,9 @@
 // Функция создающая разметку для одного фильма
+import notFoundImg from '../../images/film_card/poster-img.jpg';
+import notFoundImgBig from '../../images/film_card/poster-big.jpg';
+import notFoundImgRetina from '../../images/film_card/poster-big@2x.jpg';
+import notFoundImgBigRetina from '../../images/film_card/poster-img@2x.jpg';
+
 export default function makeOneMovieMarkup(dataMovie) {
   const {
     title,
@@ -13,9 +18,33 @@ export default function makeOneMovieMarkup(dataMovie) {
     queued,
   } = dataMovie;
   const genresNames = genres.map(genre => genre.name).join(', ');
+  const poster = poster_path ? `https://image.tmdb.org/t/p/w342${poster_path}` : notFoundImg;
+  const poster2x = poster_path
+    ? `https://image.tmdb.org/t/p/w500${poster_path}`
+    : notFoundImgRetina;
+  const posterBig = poster_path ? `https://image.tmdb.org/t/p/w500${poster_path}` : notFoundImgBig;
+  const posterBig2x = poster_path
+    ? `https://image.tmdb.org/t/p/w780${poster_path}`
+    : notFoundImgBigRetina;
   return `<div class="modal__content">
         <div class="poster__wrapper">
-            <img class="poster__img" alt="${title}" src="https://image.tmdb.org/t/p/w500${poster_path}" loading="lazy" />
+            <picture>
+                <source
+                  srcset="
+                    ${poster} 1x,
+                    ${poster2x} 2x
+                  "
+                  media="(max-width:1023px)"
+                />
+                <source
+                  srcset="
+                    ${posterBig} 1x,
+                    ${posterBig2x} 2x
+                  "
+                  media="(min-width:1024px)"
+                />
+                <img class="poster__img" alt="${title}" src="${poster}" loading="lazy" />
+              </picture>
         </div>
         <div class="movie">
             <h2 class="movie__title uppercase">${title}</h2>

@@ -52,7 +52,7 @@ export default class ApiTMDB {
 
   getMovie = () => {
     const params = new URLSearchParams({
-      append_to_response: 'videos,images',
+      append_to_response: 'videos',
     });
     const endpoint = `${ApiTMDB.#ENDPOINTS.GET_MOVIE}/${this.#id}`;
     return this.getData(endpoint, params);
