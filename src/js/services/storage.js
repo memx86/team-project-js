@@ -45,12 +45,12 @@ export default class Storage {
   };
   deleteMovie = id => {
     const movies = this.get();
-    const updatedMovies = movies.filter(movie => movie.id !== id);
+    const updatedMovies = movies?.filter(movie => movie.id !== id);
     this.save(updatedMovies);
   };
   checkMovie = id => {
     const movies = this.get();
-    const movie = movies.find(movie => movie.id === id);
+    const movie = movies?.find(movie => movie.id === id);
     return !!movie;
   };
 }

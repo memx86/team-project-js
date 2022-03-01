@@ -9,6 +9,8 @@ export default function makeOneMovieMarkup(dataMovie) {
     original_title,
     overview,
     popularity,
+    watched,
+    queued,
   } = dataMovie;
   const genresNames = genres.map(genre => genre.name).join(', ');
   return `<div class="modal__content">
@@ -47,9 +49,13 @@ export default function makeOneMovieMarkup(dataMovie) {
                 <p class="movie__text">${overview}</p>
             </div>
             <div class="movie__btn buttons__container">
-                    <button type="button" class="btn--modal btn--on" id="watched">add to Watched</button>
-                    <button type="button" class="btn--modal btn--on" id="queue">add to queue</button>
-                    <button type="button" class="btn--modal btn--on" id="trailer">trailer</button>
+                    <button type="button" class="btn--modal btn--on" data-btn="watched">${
+                      watched ? 'Remove from' : 'Add to'
+                    } watched</button>
+                    <button type="button" class="btn--modal btn--on" data-btn="queue">${
+                      queued ? 'Remove from' : 'Add to'
+                    } queue</button>
+                    <button type="button" class="btn--modal btn--on" data-btn="trailer">trailer</button>
             </div>
         </div>
     </div>`;

@@ -5,8 +5,8 @@ const movieListRef = document.querySelector('.gallery');
 
 const makeMoviesMarkup = movies =>
   movies
-    .map(({ title, release_date, poster_path, id, genre_ids: genresIds, vote_average }) => {
-      const genresNames = getGenresNames(genresIds);
+    .map(({ title, release_date, poster_path, id, genre_ids: genresIds, genres, vote_average }) => {
+      const genresNames = genresIds ? getGenresNames(genresIds) : genres.map(({ name }) => name);
       const year = new Date(release_date).getFullYear();
       const poster2x = poster_path
         ? `https://image.tmdb.org/t/p/w500${poster_path}`

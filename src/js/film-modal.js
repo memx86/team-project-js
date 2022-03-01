@@ -1,7 +1,14 @@
-import { api } from './services';
+import { api, watchedStorage, queuedStorage } from './services';
 // import { renderMarkup } from './templates/film_card';
 import makeOneMovieMarkup from './templates/film-modal';
 
+const BTNS = {
+  QUEUE: 'queue',
+  WATCHED: 'watched',
+  TRAILER: 'trailer',
+  ADD: 'Add to',
+  REMOVE: 'Remove from',
+};
 // получаем ссылку на бэкдроп
 const backdropRef = document.querySelector(`[data-modal="movie-one"]`);
 // получаем ссылку на модалку
@@ -11,6 +18,10 @@ const movieListRef = document.querySelector('.gallery');
 // получаем ссылку на кнопку закрытия модалки
 const closeBtnRef = document.querySelector(`[data-modal-close="movie-one"]`);
 const wrapperModalRef = document.querySelector('.wrapper-modal');
+
+let dataMovie = {};
+let watched = false;
+let queued = false;
 
 // Функция для тестировки запроса по получению 20 фильмов
 // async function fetchMovies() {
@@ -40,17 +51,24 @@ async function onModalOpenClick(event) {
   if (event.target === event.currentTarget || !cardRef) {
     return;
   }
-  api.id = cardRef.dataset.id;
+  const id = Number(cardRef.dataset.id);
+  watched = watchedStorage.checkMovie(id);
+  queued = queuedStorage.checkMovie(id);
 
-  const dataMovie = await api.getMovie();
+  api.id = id;
+  dataMovie = await api.getMovie();
 
-  wrapperModalRef.insertAdjacentHTML('beforeend', makeOneMovieMarkup(dataMovie));
+  wrapperModalRef.insertAdjacentHTML(
+    'beforeend',
+    makeOneMovieMarkup({ ...dataMovie, watched, queued }),
+  );
 
   openModal();
 
   closeBtnRef.addEventListener('click', closeModal);
   backdropRef.addEventListener('click', onBackdropClick);
   document.addEventListener('keydown', onEscDown);
+  wrapperModalRef.querySelector('.buttons__container').addEventListener('click', onModalButton);
 }
 
 function openModal() {
@@ -64,6 +82,7 @@ function closeModal() {
   closeBtnRef.removeEventListener('click', onBtnClick);
   backdropRef.removeEventListener('click', onBackdropClick);
   document.removeEventListener('keydown', onEscDown);
+  wrapperModalRef.querySelector('.buttons__container').removeEventListener('click', onModalButton);
   clearModal();
 }
 function onBackdropClick(e) {
@@ -77,6 +96,43 @@ function onEscDown(e) {
 function onBtnClick(e) {
   if (e.code !== closeBtnRef) return;
   closeModal();
+}
+function onModalButton(e) {
+  const btn = e.target.dataset.btn;
+  if (!btn) return;
+  switch (btn) {
+    case BTNS.WATCHED:
+      if (watched) {
+        watchedStorage.deleteMovie(dataMovie.id);
+      } else {
+        watchedStorage.saveMovie(dataMovie);
+      }
+      watched = !watched;
+      changeBtnTextWatched(e.target);
+      return;
+    case BTNS.QUEUE:
+      changeBtnTextQueue(e.target);
+      if (queued) {
+        queuedStorage.deleteMovie(dataMovie.id);
+      } else {
+        queuedStorage.saveMovie(dataMovie);
+      }
+      queued = !queued;
+      changeBtnTextQueue(e.target);
+      return;
+    case BTNS.TRAILER:
+      return;
+    default:
+      return;
+  }
+}
+
+function changeBtnTextWatched(btn) {
+  btn.textContent = `${watched ? BTNS.REMOVE : BTNS.ADD} ${BTNS.WATCHED}`;
+}
+
+function changeBtnTextQueue(btn) {
+  btn.textContent = `${queued ? BTNS.REMOVE : BTNS.ADD} ${BTNS.QUEUE}`;
 }
 
 function onModalCard() {

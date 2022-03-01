@@ -374,6 +374,7 @@ function onClickMyLibBtn() {
     refs.gallery.innerHTML = 'img заглушка';
     return;
   }
+  console.log('watched', watched);
   renderMarkup(watched);
 }
 
