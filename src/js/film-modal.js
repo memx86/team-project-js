@@ -1,6 +1,6 @@
 import { api, watchedStorage, queuedStorage } from './services';
-// import { renderMarkup } from './templates/film_card';
 import makeOneMovieMarkup from './templates/film-modal';
+import { MARKER, renderWatched, renderQueue } from './my_library';
 
 const BTNS = {
   QUEUE: 'queue',
@@ -109,6 +109,9 @@ function onModalButton(e) {
       }
       watched = !watched;
       changeBtnTextWatched(e.target);
+      if (movieListRef.classList.contains(MARKER.WATCHED)) {
+        renderWatched();
+      }
       return;
     case BTNS.QUEUE:
       changeBtnTextQueue(e.target);
@@ -119,6 +122,9 @@ function onModalButton(e) {
       }
       queued = !queued;
       changeBtnTextQueue(e.target);
+      if (movieListRef.classList.contains(MARKER.QUEUE)) {
+        renderQueue();
+      }
       return;
     case BTNS.TRAILER:
       return;
