@@ -8,6 +8,8 @@ const BTNS = {
   TRAILER: 'trailer',
   ADD: 'Add to',
   REMOVE: 'Remove from',
+  SHOW: 'Show',
+  HIDE: 'Hide',
 };
 // получаем ссылку на бэкдроп
 const backdropRef = document.querySelector(`[data-modal="movie-one"]`);
@@ -22,6 +24,7 @@ const wrapperModalRef = document.querySelector('.wrapper-modal');
 let dataMovie = {};
 let watched = false;
 let queued = false;
+let trailerShown = false;
 
 // Функция для тестировки запроса по получению 20 фильмов
 // async function fetchMovies() {
@@ -97,8 +100,8 @@ function onBtnClick(e) {
   if (e.code !== closeBtnRef) return;
   closeModal();
 }
-function onModalButton(e) {
-  const btn = e.target.dataset.btn;
+function onModalButton({ target }) {
+  const btn = target.dataset.btn;
   if (!btn) return;
   switch (btn) {
     case BTNS.WATCHED:
@@ -108,7 +111,7 @@ function onModalButton(e) {
         watchedStorage.saveMovie(dataMovie);
       }
       watched = !watched;
-      changeBtnTextWatched(e.target);
+      changeBtnTextWatched(target);
       if (movieListRef.classList.contains(MARKER.WATCHED)) {
         renderWatched();
       }
@@ -120,12 +123,32 @@ function onModalButton(e) {
         queuedStorage.saveMovie(dataMovie);
       }
       queued = !queued;
-      changeBtnTextQueue(e.target);
+      changeBtnTextQueue(target);
       if (movieListRef.classList.contains(MARKER.QUEUE)) {
         renderQueue();
       }
       return;
     case BTNS.TRAILER:
+      const trailerRef = document.querySelector('.trailer');
+      if (trailerShown) {
+        modalRef.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+        setTimeout(() => trailerRef.classList.add('is-hidden'), 250);
+      } else {
+        trailerRef.classList.remove('is-hidden');
+        setTimeout(
+          () =>
+            modalRef.scrollTo({
+              top: 500,
+              behavior: 'smooth',
+            }),
+          250,
+        );
+      }
+      trailerShown = !trailerShown;
+      changeBtnTextTrailer(target);
       return;
     default:
       return;
@@ -138,6 +161,10 @@ function changeBtnTextWatched(btn) {
 
 function changeBtnTextQueue(btn) {
   btn.textContent = `${queued ? BTNS.REMOVE : BTNS.ADD} ${BTNS.QUEUE}`;
+}
+
+function changeBtnTextTrailer(btn) {
+  btn.textContent = `${trailerShown ? BTNS.HIDE : BTNS.SHOW} ${BTNS.TRAILER}`;
 }
 
 function onModalCard() {
