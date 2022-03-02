@@ -6,6 +6,8 @@ const MARKER = {
   WATCHED: 'watched',
   QUEUE: 'queue',
 };
+const PER_PAGE = 18;
+let page = 1;
 const refs = {
   myLibBtn: document.querySelector('[data-btn="myLibrary"]'),
   myLibA: document.querySelector('[data-a="myLibrary"]'),
@@ -24,12 +26,12 @@ function onClickMyLibBtn() {
   if (refs.myLibA.classList.contains('current')) {
     return;
   }
-  pagination.hidePagination();
   changeClassA('current');
   changeClassBtn('btn--on', 'btn--off');
   refs.libBtnsContainer.classList.remove('is-hidden');
   refs.inputForm.classList.add('is-hidden');
   refs.header.classList.add('myLib');
+  page = 1;
   renderWatched();
 }
 
@@ -40,12 +42,34 @@ function removeMarker(marker) {
   refs.gallery.classList.remove(marker);
 }
 
-function renderWatched() {
+function renderWatched(newPage) {
   refs.gallery.innerHTML = '';
   const watched = watchedStorage.get();
   removeMarker(MARKER.QUEUE);
   addMarker(MARKER.WATCHED);
-  renderLibrary(watched);
+  pagination.callback = renderWatched;
+  const watchedPage = preparePage(watched, newPage);
+  renderLibrary(watchedPage);
+}
+
+function renderQueue(newPage) {
+  refs.gallery.innerHTML = '';
+  const queue = queuedStorage.get();
+  removeMarker(MARKER.WATCHED);
+  addMarker(MARKER.QUEUE);
+  pagination.callback = renderQueue;
+  const queuePage = preparePage(queue, newPage);
+  renderLibrary(queuePage);
+}
+
+function preparePage(data, newPage) {
+  page = newPage ? newPage : page;
+  const totalPages = Math.ceil(data.length / PER_PAGE);
+  page = page > totalPages ? page - 1 : page;
+  pagination.page = page;
+  pagination.totalPages = totalPages;
+  const skip = (page - 1) * PER_PAGE;
+  return data.slice(skip, PER_PAGE * page);
 }
 
 function renderLibrary(movies) {
@@ -74,20 +98,14 @@ function onClickMyHomeBtn() {
 
 function onClickMyWatchedBtn() {
   changeClassBtn('btn--on', 'btn--off');
+  page = 1;
   renderWatched();
 }
 
 function onClickMyQueueBtn() {
   changeClassBtn('btn--off', 'btn--on');
+  page = 1;
   renderQueue();
-}
-
-function renderQueue() {
-  refs.gallery.innerHTML = '';
-  const queue = queuedStorage.get();
-  removeMarker(MARKER.WATCHED);
-  addMarker(MARKER.QUEUE);
-  renderLibrary(queue);
 }
 
 function changeClassBtn(add, remove) {
