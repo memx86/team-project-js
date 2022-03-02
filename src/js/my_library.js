@@ -75,6 +75,7 @@ function preparePage(data, newPage) {
 function renderLibrary(movies) {
   if (!movies || movies.length === 0) {
     refs.info.innerHTML = 'Please add something to library';
+    pagination.hidePagination();
     return;
   }
   refs.info.innerHTML = '';
