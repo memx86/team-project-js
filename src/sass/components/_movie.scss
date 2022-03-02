@@ -143,6 +143,7 @@
 
 .buttons__container.movie__btn {
   flex-wrap: wrap;
+  gap: 15px;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -151,9 +152,11 @@
   }
   @include mq(tablet) {
     width: 264px;
+    gap: 10px;
   }
   @include mq(desktop) {
     width: 396px;
+    gap: 0 20px;
   }
 }
 
@@ -176,7 +179,7 @@
   width: 240px;
   height: 135px;
   @include mq(tablet-only) {
-    width: 618px;
+    width: 558px;
     height: 347px;
   }
   @include mq(desktop) {
