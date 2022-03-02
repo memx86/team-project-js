@@ -16,6 +16,7 @@ export default function makeOneMovieMarkup(dataMovie) {
     popularity,
     watched,
     queued,
+    videos,
   } = dataMovie;
   const genresNames = genres.map(genre => genre.name).join(', ');
   const poster = poster_path ? `https://image.tmdb.org/t/p/w342${poster_path}` : notFoundImg;
@@ -26,6 +27,11 @@ export default function makeOneMovieMarkup(dataMovie) {
   const posterBig2x = poster_path
     ? `https://image.tmdb.org/t/p/w780${poster_path}`
     : notFoundImgBigRetina;
+  let trailer = videos.results.find(
+    video => video['iso_639_1'] === 'en' && video.type === 'Trailer',
+  );
+  trailer = trailer ? trailer : videos.results[0];
+  const trailerKey = trailer?.key;
   return `<div class="modal__content">
         <div class="poster__wrapper">
             <picture>
@@ -84,8 +90,29 @@ export default function makeOneMovieMarkup(dataMovie) {
                     <button type="button" class="btn--modal btn--on" data-btn="queue">${
                       queued ? 'Remove from' : 'Add to'
                     } queue</button>
-                    <button type="button" class="btn--modal btn--on" data-btn="trailer">trailer</button>
+                    ${
+                      trailerKey
+                        ? `<button type="button" class="btn--modal btn--on" data-btn="trailer">Show trailer</button>`
+                        : ''
+                    }
             </div>
         </div>
-    </div>`;
+    </div>
+    ${
+      trailerKey
+        ? `<div class="trailer is-hidden">
+      <iframe
+      class="trailer__iframe"
+      width="240"
+      height="135"
+      src="https://www.youtube.com/embed/${trailerKey}"
+      title="${trailer.type}"
+      frameborder="0"
+      allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope; picture-in-picture"
+      allowfullscreen>
+      </iframe>
+    </div>`
+        : '<div></div>'
+    }
+    `;
 }
