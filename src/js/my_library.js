@@ -44,7 +44,7 @@ function removeMarker(marker) {
 
 function renderWatched(newPage) {
   refs.gallery.innerHTML = '';
-  const watched = watchedStorage.get();
+  const watched = watchedStorage.get() || [];
   removeMarker(MARKER.QUEUE);
   addMarker(MARKER.WATCHED);
   pagination.callback = renderWatched;
@@ -54,7 +54,7 @@ function renderWatched(newPage) {
 
 function renderQueue(newPage) {
   refs.gallery.innerHTML = '';
-  const queue = queuedStorage.get();
+  const queue = queuedStorage.get() || [];
   removeMarker(MARKER.WATCHED);
   addMarker(MARKER.QUEUE);
   pagination.callback = renderQueue;
@@ -65,7 +65,7 @@ function renderQueue(newPage) {
 function preparePage(data, newPage) {
   page = newPage ? newPage : page;
   const totalPages = Math.ceil(data.length / PER_PAGE);
-  page = page > totalPages ? page - 1 : page;
+  page = page > totalPages ? totalPages : page;
   pagination.page = page;
   pagination.totalPages = totalPages;
   const skip = (page - 1) * PER_PAGE;
