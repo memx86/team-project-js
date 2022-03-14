@@ -1,5 +1,17 @@
 html {
   scroll-behavior: smooth;
+  &[color-scheme='dark'] {
+    --main-text-cl: var(--main-text-cl-dark);
+    --secondary-text-cl: var(--secondary-text-cl-dark);
+    --main-cl: var(--main-cl-dark);
+    --secondary-bg-cl: var(--secondary-bg-cl-dark);
+  }
+  &[color-scheme='light'] {
+    --main-text-cl: var(--main-text-cl-light);
+    --secondary-text-cl: var(--secondary-text-cl-light);
+    --main-cl: var(--main-cl-light);
+    --secondary-bg-cl: var(--secondary-bg-cl-light);
+  }
 }
 body {
   font-family: 'Roboto', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
