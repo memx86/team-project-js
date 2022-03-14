@@ -40,11 +40,11 @@
   &:not(:disabled):hover,
   &:focus {
     outline: none;
-    color: var(--main-light-cl);
+    color: var(--main-cl);
     background-color: var(--accent-cl);
   }
   &--active {
-    color: var(--main-light-cl);
+    color: var(--main-cl);
     background-color: var(--accent-cl);
     &:hover,
     &:focus {

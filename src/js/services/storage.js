@@ -13,6 +13,7 @@ export default class Storage {
     WATCHED: 'filmoteka/watched',
     QUEUED: 'filmoteka/queued',
     GENRES: 'filmoteka/genres',
+    THEME: 'filmoteka/theme',
   };
   constructor(key) {
     this.key = key;

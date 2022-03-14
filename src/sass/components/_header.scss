@@ -53,7 +53,7 @@
       font-size: 30px;
       line-height: 1.16;
       margin-left: 10px;
-      color: var(--main-light-cl);
+      color: var(--main-cl-light);
     }
   }
 }
@@ -64,6 +64,38 @@
   align-items: center;
 }
 
+.theme {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--main-cl-light);
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color 250ms linear;
+  &:hover,
+  &:focus {
+    outline: none;
+    color: var(--accent-cl);
+  }
+}
+.theme__svg {
+  fill: currentColor;
+}
+.theme__choice {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 250ms linear, visibility 250ms linear;
+  &.active {
+    opacity: 1;
+    pointer-events: all;
+    visibility: visible;
+  }
+}
 ///////////////////FORM/////////////////////////////////////
 .header-form {
   position: relative;
@@ -86,13 +118,13 @@
     font-size: 14px;
     line-height: 1.14;
     background-color: transparent;
-    color: var(--main-light-cl);
+    color: var(--main-cl-light);
     padding-bottom: 4px;
     border: none;
-    border-bottom: 0.5px solid var(--main-light-cl);
+    border-bottom: 0.5px solid var(--main-cl-light);
 
     &::placeholder {
-      color: var(--main-light-cl);
+      color: var(--main-cl-light);
     }
   }
 
@@ -128,7 +160,7 @@
     position: relative;
     line-height: 1.16;
     text-transform: uppercase;
-    color: var(--main-light-cl);
+    color: var(--main-cl-light);
     margin-top: 5px;
     cursor: pointer;
   }
