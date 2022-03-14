@@ -53,7 +53,7 @@
       font-size: 30px;
       line-height: 1.16;
       margin-left: 10px;
-      color: var(--main-cl);
+      color: var(--main-cl-light);
     }
   }
 }
@@ -70,7 +70,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--main-cl);
+  color: var(--main-cl-light);
   background-color: transparent;
   border: 1px solid transparent;
   border-radius: 50%;
@@ -118,13 +118,13 @@
     font-size: 14px;
     line-height: 1.14;
     background-color: transparent;
-    color: var(--main-cl);
+    color: var(--main-cl-light);
     padding-bottom: 4px;
     border: none;
-    border-bottom: 0.5px solid var(--main-cl);
+    border-bottom: 0.5px solid var(--main-cl-light);
 
     &::placeholder {
-      color: var(--main-cl);
+      color: var(--main-cl-light);
     }
   }
 
@@ -160,7 +160,7 @@
     position: relative;
     line-height: 1.16;
     text-transform: uppercase;
-    color: var(--main-cl);
+    color: var(--main-cl-light);
     margin-top: 5px;
     cursor: pointer;
   }

@@ -30,13 +30,13 @@
 
 .btn--off {
   background-color: transparent;
-  color: var(--main-text-cl);
-  border: 1px solid var(--main-text-cl);
+  color: var(--main-text-cl-light);
+  border: 1px solid var(--main-text-cl-light);
 }
 
 .btn--header {
-  color: var(--main-cl);
-  border: 1px solid var(--main-cl);
+  color: var(--main-cl-light);
+  border: 1px solid var(--main-cl-light);
   width: 130px;
   @include mq(desktop) {
     width: 136px;
@@ -45,7 +45,7 @@
 
 .btn--on {
   background-color: var(--accent-cl);
-  color: var(--main-cl);
+  color: var(--main-cl-light);
   border: none;
 }
 
