@@ -4,6 +4,7 @@ import popularMovies from './popular_movies';
 import search from './searchFilms';
 import filmModal from './film-modal';
 import { myLibrary } from './my_library';
+import addUpBtn from './up-btn';
 
 export default async function app() {
   genres();
@@ -12,4 +13,5 @@ export default async function app() {
   search();
   filmModal();
   myLibrary();
+  addUpBtn();
 }
