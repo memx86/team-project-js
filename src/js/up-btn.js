@@ -17,6 +17,7 @@ function createBtn(direction) {
   const btn = document.createElement('a');
   const href = direction === BTN.UP ? '#header' : '#footer';
   btn.setAttribute('href', href);
+  btn.setAttribute('aria-label', `Scroll page ${direction}`);
   btn.classList.add(`${BTN.CLASS}__btn`, 'is-hidden');
   btn.innerHTML = `
     <svg class="${BTN.CLASS}__svg" width="32" height="32">
