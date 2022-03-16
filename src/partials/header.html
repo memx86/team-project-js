@@ -1,4 +1,4 @@
-<header class="header" id="header">
+<header class="header home" id="header">
   <div class="container">
     <div class="header-container">
       <a href="index.html" class="header__logo">
@@ -24,24 +24,26 @@
         </ul>
       </nav>
     </div>
-    <form action="" class="header-form">
-      <label for="search-input" class="header-form__label"></label>
-      <input
-        type="text"
-        name="search"
-        id="search-input"
-        placeholder="Поиск фильмов"
-        class="header-form__input"
-      />
-      <button type="submit" class="header-form__button">
-        <svg class="header-form__icon">
-          <use href="images/sprite.svg#icon-search"></use>
-        </svg>
-      </button>
-    </form>
-    <div class="buttons__container buttons__container--header visually-hidden">
-      <button type="button" data-btn="watched" class="btn--on btn--header">WATCHED</button>
-      <button type="button" data-btn="queue" class="btn--off btn--header">queue</button>
+    <div class="header__content">
+      <form action="" class="header-form">
+        <label for="search-input" class="header-form__label"></label>
+        <input
+          type="text"
+          name="search"
+          id="search-input"
+          placeholder="Поиск фильмов"
+          class="header-form__input"
+        />
+        <button type="submit" class="header-form__button">
+          <svg class="header-form__icon">
+            <use href="images/sprite.svg#icon-search"></use>
+          </svg>
+        </button>
+      </form>
+      <div class="buttons__container buttons__container--header is-hidden">
+        <button type="button" data-btn="watched" class="btn--on btn--header">WATCHED</button>
+        <button type="button" data-btn="queue" class="btn--off btn--header">queue</button>
+      </div>
     </div>
   </div>
 </header>

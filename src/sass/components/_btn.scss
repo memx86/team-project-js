@@ -2,7 +2,14 @@
   display: flex;
 }
 .buttons__container--header {
+  position: absolute;
   justify-content: center;
+  transition: opacity 250ms linear, visibility 250ms linear;
+  &.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
 }
 .btn--modal,
 .btn--header {
