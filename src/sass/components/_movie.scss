@@ -32,7 +32,12 @@
   &__close.modal-close {
     padding: 0;
     transform: translate(-50%, 50%);
+    background-color: var(--main-cl);
     color: var(--main-text-cl);
+    &:hover,
+    &:focus {
+      background-color: var(--accent-cl);
+    }
   }
   &__icon--close {
     fill: currentColor;
