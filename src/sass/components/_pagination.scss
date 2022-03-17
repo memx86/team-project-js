@@ -1,10 +1,13 @@
 .pagination {
   margin-top: 40px;
+  padding-bottom: 40px;
   @include mq(tablet-only) {
     margin-top: 50px;
+    padding-bottom: 70px;
   }
   @include mq(desktop) {
     margin-top: 46px;
+    padding-bottom: 60px;
   }
   display: flex;
   justify-content: center;
