@@ -7,7 +7,7 @@
   z-index: 10;
   margin-left: auto;
   margin-right: auto;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: var(--backdrop-cl);
   opacity: 1;
   transition: opacity 250ms linear, visibility 250ms linear;
   overflow-y: scroll;

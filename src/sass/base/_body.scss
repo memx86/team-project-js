@@ -5,12 +5,14 @@ html {
     --secondary-text-cl: var(--secondary-text-cl-dark);
     --main-cl: var(--main-cl-dark);
     --secondary-bg-cl: var(--secondary-bg-cl-dark);
+    --backdrop-cl: var(--backdrop-cl-dark);
   }
   &[color-scheme='light'] {
     --main-text-cl: var(--main-text-cl-light);
     --secondary-text-cl: var(--secondary-text-cl-light);
     --main-cl: var(--main-cl-light);
     --secondary-bg-cl: var(--secondary-bg-cl-light);
+    --backdrop-cl: var(--backdrop-cl-light);
   }
 }
 body {
