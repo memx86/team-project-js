@@ -5,6 +5,7 @@ import search from './searchFilms';
 import filmModal from './film-modal';
 import { myLibrary } from './my_library';
 import addUpBtn from './up-btn';
+import { Modal } from './services/modal';
 
 export default async function app() {
   genres();
@@ -14,4 +15,5 @@ export default async function app() {
   filmModal();
   myLibrary();
   addUpBtn();
+  const teamModal = new Modal('team');
 }

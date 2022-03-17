@@ -27,16 +27,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--accent-cl);
+  color: var(--main-cl);
   border: 1px solid transparent;
   border-radius: 50%;
-  background-color: var(--main-cl);
+  background-color: var(--accent-cl);
   cursor: pointer;
   transition: color 250ms linear, background-color 250ms linear;
   &:hover,
   &:focus {
     outline: none;
-    color: var(--main-cl);
-    background-color: var(--accent-cl);
+    color: var(--accent-cl);
+    background-color: var(--main-cl);
   }
 }

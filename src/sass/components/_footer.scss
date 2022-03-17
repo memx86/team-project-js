@@ -28,4 +28,10 @@
 .footer__link {
   text-decoration: underline;
   cursor: pointer;
+  transition: color 250ms linear;
+  &:hover,
+  &:focus {
+    color: var(--accent-cl);
+    outline: none;
+  }
 }
