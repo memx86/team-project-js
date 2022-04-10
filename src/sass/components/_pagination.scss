@@ -40,6 +40,10 @@
       fill: transparent;
     }
   }
+  &:disabled {
+    cursor: auto;
+    opacity: 0.5;
+  }
   &:not(:disabled):hover,
   &:focus {
     outline: none;

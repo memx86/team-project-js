@@ -8,12 +8,12 @@ import addUpBtn from './up-btn';
 import { Modal } from './services/modal';
 
 export default async function app() {
-  genres();
+  await genres();
   handleTheme();
   popularMovies();
   search();
   filmModal();
   myLibrary();
   addUpBtn();
-  const teamModal = new Modal('team');
+  new Modal('team');
 }
